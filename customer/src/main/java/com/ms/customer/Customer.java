@@ -1,15 +1,25 @@
 package com.ms.customer;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-import java.math.BigInteger;
+import javax.persistence.*;
 
-@Data
+
+@Getter
+@Setter
 @Builder
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
-    private final BigInteger id;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
+    @Id
+    @SequenceGenerator(name = "customer_id_sequence",
+            sequenceName = "customer_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "customer_id_sequence")
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+
 }
