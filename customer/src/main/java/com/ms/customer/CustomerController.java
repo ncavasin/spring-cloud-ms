@@ -1,21 +1,41 @@
 package com.ms.customer;
 
-import com.ms.customer.dto.CustomerRegistrationRequest;
-import lombok.extern.slf4j.Slf4j;
+import com.ms.customer.dto.CustomerConverter;
+import com.ms.customer.dto.CustomerCreationDto;
+import com.ms.customer.dto.CustomerDto;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import java.util.List;
+
 @RestController
-@RequestMapping("api/v1/customer")
+@RequestMapping("/api/customer")
 public record CustomerController(CustomerService customerService) {
 
-    @PostMapping()
-    public void registerCustomer(@Validated @RequestBody CustomerRegistrationRequest customerRegistrationRequest){
-        log.info("New customer registered {}", customerRegistrationRequest);
-        customerService.registerCustomer(customerRegistrationRequest);
+    @GetMapping("/all")
+    public List<CustomerDto> getAll() {
+        return null;
     }
+
+
+    @GetMapping("")
+    public CustomerDto getCustomer(@PathVariable("customerId") String customerId) {
+        return CustomerConverter.convert(this.customerService.getCustomerById(customerId));
+    }
+
+    @PostMapping()
+    public CustomerDto addCustomer(@Validated @RequestBody CustomerCreationDto customerCreationDto) {
+        return CustomerConverter.convert(this.customerService.createCustomer(customerCreationDto));
+    }
+
+    @PatchMapping
+    public CustomerDto updateCustomer(@PathVariable("customerId") String customerId, @Validated @RequestBody CustomerDto customerDto) {
+        return CustomerConverter.convert(this.customerService.updateCustomer(customerId, customerDto));
+    }
+
+    @DeleteMapping
+    public void deleteCustomer(@PathVariable("customerId") String customerId) {
+        this.customerService.deleteCustomer(customerId);
+    }
+
 }
