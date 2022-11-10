@@ -18,7 +18,7 @@ public record CustomerController(CustomerService customerService) {
     }
 
 
-    @GetMapping("")
+    @GetMapping("/{customerId}")
     public CustomerDto getCustomer(@PathVariable("customerId") String customerId) {
         return CustomerConverter.convert(this.customerService.getCustomerById(customerId));
     }
@@ -28,12 +28,12 @@ public record CustomerController(CustomerService customerService) {
         return CustomerConverter.convert(this.customerService.createCustomer(customerCreationDto));
     }
 
-    @PatchMapping
+    @PatchMapping("/{customerId}")
     public CustomerDto updateCustomer(@PathVariable("customerId") String customerId, @Validated @RequestBody CustomerDto customerDto) {
         return CustomerConverter.convert(this.customerService.updateCustomer(customerId, customerDto));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{customerId}")
     public void deleteCustomer(@PathVariable("customerId") String customerId) {
         this.customerService.deleteCustomer(customerId);
     }
