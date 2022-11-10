@@ -1,18 +1,36 @@
 services:
-  postgres:
-    container_name: postgres
-    image: postgres
+  db:
+    container_name: ticketing-db
+    image: postgres:latest
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_DATA: /var/lib/postgresql/data
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
     networks:
-      - postgres
-    restart: unless-stopped
+      - ticketing
+    ports:
+      - ${EXT_DB_PORT}:${INT_DB_PORT}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: on-failure
+
+#  postgres:
+#    container_name: postgres
+#    image: postgres
+#    environment:
+#      POSTGRES_USER: admin
+#      POSTGRES_PASSWORD: admin
+#      PGDATA: /data/postgres
+#    volumes:
+#      - postgres:/data/postgres
+#    ports:
+#      - "5050:5432"
+#    networks:
+#      - postgres
+#    restart: unless-stopped
+
 #  customer:
 #    image: amigoscode/customer:latest
 #    container_name: customer
@@ -25,11 +43,7 @@ services:
 #      - postgres
 
 networks:
-  postgres:
-    driver: bridge
-  spring:
-    driver: bridge
+  ticketing:
 
 volumes:
-  postgres:
-  pgadmin:
+  pgdata: {}
