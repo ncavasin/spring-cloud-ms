@@ -10,14 +10,11 @@ import org.springframework.stereotype.Service;
 public record CustomerService(CustomerRepository customerRepository) {
     public Customer createCustomer(CustomerCreationDto customerCreationDto) {
         emailIsTaken(customerCreationDto.email());
-
-
+        // TODO: validate email format
         Customer customer = Customer.builder()
                 .email(customerCreationDto.email())
                 .password(customerCreationDto.password())
                 .build();
-
-        // Check email is valid
         return customerRepository.save(customer);
     }
 
@@ -31,6 +28,7 @@ public record CustomerService(CustomerRepository customerRepository) {
         emailIsTaken(customerDto.email());
         found.setEmail(customerDto.email());
         found.setPassword(customerDto.password());
+        // TODO: hash password
         return this.customerRepository.save(found);
     }
 
