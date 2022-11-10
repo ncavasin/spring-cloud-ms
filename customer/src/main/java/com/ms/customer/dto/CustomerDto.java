@@ -1,4 +1,4 @@
 package com.ms.customer.dto;
 
-public record CustomerDto(String email, String password) {
+public record CustomerDto(String id, String email, String password) {
 }
