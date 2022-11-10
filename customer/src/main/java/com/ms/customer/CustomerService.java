@@ -6,8 +6,6 @@ import com.ms.shared.exceptions.BadRequest;
 import com.ms.shared.exceptions.NotFound;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-
 @Service
 public record CustomerService(CustomerRepository customerRepository) {
     public Customer createCustomer(CustomerCreationDto customerCreationDto) {
@@ -25,7 +23,7 @@ public record CustomerService(CustomerRepository customerRepository) {
 
     public Customer getCustomerById(String customerId) {
         return this.customerRepository.findById(customerId)
-                .orElseThrow(() -> new NotFound(String.format("Customer with id {} not found!", customerId)));
+                .orElseThrow(() -> new NotFound(String.format("Customer with id %s not found!", customerId)));
     }
 
     public Customer updateCustomer(String customerId, CustomerDto customerDto) {
@@ -38,14 +36,14 @@ public record CustomerService(CustomerRepository customerRepository) {
 
     public void deleteCustomer(String customerId) {
         if (!this.customerRepository.existsById(customerId)) {
-            throw new EntityNotFoundException(String.format("Customer with id {} not found!", customerId));
+            throw new NotFound(String.format("Customer with id %s not found!", customerId));
         }
         this.customerRepository.deleteById(customerId);
     }
 
     private void emailIsTaken(String email) {
         if (this.customerRepository.existsByEmail(email)) {
-            throw new BadRequest(String.format("Email {} already taken!", email));
+            throw new BadRequest(String.format("Email %s already taken!", email));
         }
     }
 }
