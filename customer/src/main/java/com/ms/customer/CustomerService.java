@@ -6,6 +6,8 @@ import com.ms.shared.exceptions.BadRequest;
 import com.ms.shared.exceptions.NotFound;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public record CustomerService(CustomerRepository customerRepository) {
     public Customer createCustomer(CustomerCreationDto customerCreationDto) {
@@ -16,6 +18,10 @@ public record CustomerService(CustomerRepository customerRepository) {
                 .password(customerCreationDto.password())
                 .build();
         return customerRepository.save(customer);
+    }
+
+    public List<Customer> getAll() {
+        return this.customerRepository.findAll();
     }
 
     public Customer getCustomerById(String customerId) {
