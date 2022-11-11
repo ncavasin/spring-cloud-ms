@@ -1,4 +1,4 @@
-package com.ms.ticket.dto;
+package com.ms.customer.ticket.dto;
 
 import java.math.BigDecimal;
 

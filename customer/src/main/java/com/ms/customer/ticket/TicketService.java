@@ -1,8 +1,8 @@
-package com.ms.ticket;
+package com.ms.customer.ticket;
 
-import com.ms.shared.exceptions.NotFound;
-import com.ms.ticket.dto.TicketCreationDto;
-import com.ms.ticket.dto.TicketDto;
+import com.ms.customer.shared.exceptions.NotFound;
+import com.ms.customer.ticket.dto.TicketCreationDto;
+import com.ms.customer.ticket.dto.TicketDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

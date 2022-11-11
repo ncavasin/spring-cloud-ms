@@ -1,4 +1,4 @@
-package com.ms.ticket;
+package com.ms.customer.ticket;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

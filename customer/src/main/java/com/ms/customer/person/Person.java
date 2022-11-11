@@ -1,6 +1,6 @@
-package com.ms.person;
+package com.ms.customer.person;
 
-import com.ms.shared.entities.TimeTrackable;
+import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
 
 import javax.persistence.Entity;

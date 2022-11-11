@@ -1,9 +1,9 @@
-package com.ms.customer;
+package com.ms.customer.customer;
 
 import com.ms.customer.dto.CustomerCreationDto;
 import com.ms.customer.dto.CustomerDto;
-import com.ms.shared.exceptions.BadRequest;
-import com.ms.shared.exceptions.NotFound;
+import com.ms.customer.shared.exceptions.BadRequest;
+import com.ms.customer.shared.exceptions.NotFound;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

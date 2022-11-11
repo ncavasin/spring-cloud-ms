@@ -1,7 +1,6 @@
-package com.ms.customer;
+package com.ms.customer.customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 

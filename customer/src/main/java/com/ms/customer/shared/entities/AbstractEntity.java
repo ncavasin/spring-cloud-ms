@@ -1,4 +1,4 @@
-package com.ms.shared.entities;
+package com.ms.customer.shared.entities;
 
 import lombok.Getter;
 import lombok.Setter;
