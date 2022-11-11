@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/customer")
 public record CustomerController(CustomerService customerService) {
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<CustomerDto> getAll() {
         return CustomerConverter.convert(this.customerService.getAll());
     }

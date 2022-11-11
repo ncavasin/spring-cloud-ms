@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/movie")
 public record MovieController(MovieService movieService, ModelMapper modelMapper) {
 
-    @GetMapping
+    @GetMapping("/all")
     public List<MovieDto> getAll() {
         return MovieConverter.convert(movieService.getAll());
     }
