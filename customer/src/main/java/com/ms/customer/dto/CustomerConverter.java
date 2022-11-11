@@ -1,6 +1,6 @@
 package com.ms.customer.dto;
 
-import com.ms.customer.Customer;
+import com.ms.customer.customer.Customer;
 
 import java.util.List;
 import java.util.stream.Collectors;
