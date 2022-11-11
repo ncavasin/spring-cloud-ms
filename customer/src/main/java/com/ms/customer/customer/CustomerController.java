@@ -1,8 +1,8 @@
 package com.ms.customer.customer;
 
-import com.ms.customer.dto.CustomerConverter;
-import com.ms.customer.dto.CustomerCreationDto;
-import com.ms.customer.dto.CustomerDto;
+import com.ms.customer.customer.dto.CustomerConverter;
+import com.ms.customer.customer.dto.CustomerCreationDto;
+import com.ms.customer.customer.dto.CustomerDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

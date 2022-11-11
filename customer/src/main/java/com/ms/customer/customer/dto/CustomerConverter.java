@@ -1,4 +1,4 @@
-package com.ms.customer.dto;
+package com.ms.customer.customer.dto;
 
 import com.ms.customer.customer.Customer;
 
