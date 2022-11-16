@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Entity
 public class Branch extends TimeTrackable {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     protected String name;
     protected String zipCode;
 }
