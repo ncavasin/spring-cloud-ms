@@ -10,4 +10,6 @@ public interface BranchRepository extends JpaRepository<Branch, String> {
     List<Branch> findAll();
 
     Optional<Branch> findByName(String name);
+
+    Boolean existsByName(String name);
 }

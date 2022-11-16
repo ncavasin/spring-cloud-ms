@@ -18,12 +18,15 @@ public record BranchService(BranchRepository branchRepository) {
                 .orElseThrow(() -> new NotFound(String.format("Branch with id %s not found.", branchId)));
     }
 
-    public Branch getByName(String name){
+    public Branch getByName(String name) {
         return this.branchRepository().findByName(name)
                 .orElseThrow(() -> new NotFound(String.format("Branch with name %s not found.", name)));
     }
 
     public Branch add(Branch branch) {
+        if (this.branchRepository.existsByName(branch.getName())) {
+            throw new BadRequest(String.format("Branch with name %s already exists", branch.getName()));
+        }
         return this.branchRepository.save(branch);
     }
 
