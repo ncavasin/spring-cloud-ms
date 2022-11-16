@@ -18,6 +18,11 @@ public record BranchService(BranchRepository branchRepository) {
                 .orElseThrow(() -> new NotFound(String.format("Branch with id %s not found.", branchId)));
     }
 
+    public Branch getByName(String name){
+        return this.branchRepository().findByName(name)
+                .orElseThrow(() -> new NotFound(String.format("Branch with name %s not found.", name)));
+    }
+
     public Branch add(Branch branch) {
         return this.branchRepository.save(branch);
     }

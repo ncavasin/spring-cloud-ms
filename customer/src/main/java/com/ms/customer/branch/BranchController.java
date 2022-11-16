@@ -22,6 +22,11 @@ public record BranchController(BranchService branchService) {
         return BranchConverter.convert(this.branchService.getById(branchId));
     }
 
+    @GetMapping("/name/{branchName}")
+    public BranchDto getByName(@PathVariable("branchName") String branchName) {
+        return BranchConverter.convert(this.branchService.getByName(branchName));
+    }
+
     @PostMapping()
     public BranchDto add(@Validated @RequestBody BranchCreationDto branchCreationDto) {
         return BranchConverter.convert(this.branchService.add(BranchConverter.convert(branchCreationDto)));
