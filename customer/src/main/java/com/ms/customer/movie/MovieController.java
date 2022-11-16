@@ -3,7 +3,6 @@ package com.ms.customer.movie;
 import com.ms.customer.movie.dto.MovieConverter;
 import com.ms.customer.movie.dto.MovieCreationDto;
 import com.ms.customer.movie.dto.MovieDto;
-import org.modelmapper.ModelMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movie")
-public record MovieController(MovieService movieService, ModelMapper modelMapper) {
+public record MovieController(MovieService movieService) {
 
     @GetMapping("/all")
     public List<MovieDto> getAll() {
