@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/format")
 public record ScreenFormatController(ScreenFormatService screenFormatService) {
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ScreenFormatDto> getAll() {
         return ScreenFormatConverter.convert(this.screenFormatService.getAll());
     }
