@@ -4,6 +4,7 @@ import com.ms.customer.customer.dto.CustomerConverter;
 import com.ms.customer.customer.dto.CustomerDto;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class CustomerServiceTest {
     private CustomerService customerService;
     private Customer createdCustomer;
 
+    @Ignore
     @Before
     @Transactional
     public void setUp() {
@@ -28,6 +30,7 @@ public class CustomerServiceTest {
                 .build()));
     }
 
+    @Ignore
     @Test
     @Transactional
     public void createCustomer() {
