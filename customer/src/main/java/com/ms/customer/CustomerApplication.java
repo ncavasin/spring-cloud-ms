@@ -11,7 +11,7 @@ public class CustomerApplication {
 
     @Bean
     public Logger logger(){
-        return LoggerFactory.getLogger("Default logger");
+        return LoggerFactory.getLogger("CustomerModuleLogger");
     }
 
 
