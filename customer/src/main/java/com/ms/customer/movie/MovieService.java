@@ -30,15 +30,15 @@ public record MovieService(MovieRepository movieRepository, Logger logger) {
     }
 
 
-    public Movie updateMovie(String movieId, Movie movieDto) {
-        Movie movie = this.getById(movieId);
-        movie.setTitle(movieDto.title);
-        movie.setRating(movie.getRating());
-        movie.setSynopsis(movieDto.synopsis);
-        movie.setDuration(movie.duration);
-        movie.setClassification(movieDto.getClassification());
+    public Movie updateMovie(String movieId, Movie movie) {
+        Movie found = this.getById(movieId);
+        found.setTitle(movie.title);
+        found.setRating(movie.getRating());
+        found.setSynopsis(movie.synopsis);
+        found.setDuration(movie.duration);
+        found.setClassification(movie.getClassification());
         logger.info("Movie with id '{}' updated.", movieId);
-        return this.movieRepository.save(movie);
+        return this.movieRepository.save(found);
     }
 
     public void deleteMovie(String movieId) {
