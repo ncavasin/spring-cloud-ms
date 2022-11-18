@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class MovieConverter {
 
-
     public static Movie convert(MovieDto movieDto) {
         return Movie.builder()
                 .title(movieDto.title())
