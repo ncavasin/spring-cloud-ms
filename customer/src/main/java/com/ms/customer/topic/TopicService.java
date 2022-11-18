@@ -22,12 +22,21 @@ public record TopicService(TopicRepository topicRepository, Logger logger) {
     }
 
     public Topic add(Topic topic) {
+        validateNameIsUnique(topic.getName());
         logger.info("Topic with name '{}' created.", topic.getName());
         return this.topicRepository.save(topic);
     }
 
+    private void validateNameIsUnique(String name) {
+        if (!this.topicRepository.existsByName(name)) {
+            logger.warn("Topic with name '{}' does not exist.", name);
+            throw new BadRequest(String.format("Topic with name %s does not exist.", name));
+        }
+    }
+
     public Topic update(String topicId, Topic topic) {
         existsById(topicId);
+        validateNameIsUnique(topic.getName());
         topic.setId(topicId);
         logger.info("Topic with id '{}' updated.", topic.getId());
         return this.topicRepository.save(topic);
