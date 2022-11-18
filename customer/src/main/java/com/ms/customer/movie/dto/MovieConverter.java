@@ -15,6 +15,7 @@ public class MovieConverter {
                 .synopsis(movieDto.synopsis())
                 .duration(movieDto.duration())
                 .classification(movieDto.classification())
+                .topics(movieDto.topics())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class MovieConverter {
                 .duration(movie.getDuration())
                 .classification(movie.getClassification())
                 .rating(movie.getRating())
+                .topics(movie.getTopics())
                 .build();
     }
 
