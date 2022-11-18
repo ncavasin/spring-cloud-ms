@@ -22,7 +22,7 @@ public class TopicConverter {
 
     public static Topic convert(TopicDto topicDto) {
         return Topic.builder()
-                .name(topicDto.id())
+                .name(topicDto.name())
                 .build();
     }
 }
