@@ -21,6 +21,11 @@ public record TopicController(TopicService topicService) {
         return TopicConverter.convert(this.topicService.findById(topicId));
     }
 
+    @GetMapping("/name/{name}")
+    public TopicDto getByName(@PathVariable("name") String name) {
+        return TopicConverter.convert(this.topicService.findByName(name));
+    }
+
     @PostMapping()
     public TopicDto add(@Validated @RequestBody TopicDto topicDto) {
         return TopicConverter.convert(this.topicService.add(TopicConverter.convert(topicDto)));
@@ -32,7 +37,7 @@ public record TopicController(TopicService topicService) {
     }
 
     @DeleteMapping("/{topicId}")
-    public void delete(@PathVariable("topicId") String topicId){
+    public void delete(@PathVariable("topicId") String topicId) {
         this.topicService.delete(topicId);
     }
 }

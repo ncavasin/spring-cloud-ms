@@ -21,22 +21,23 @@ public record TopicService(TopicRepository topicRepository, Logger logger) {
                 });
     }
 
+    public Topic findByName(String name) {
+        return this.topicRepository.findByName(name)
+                .orElseThrow(() -> {
+                    logger.warn("Topic with name '{}' not found.", name);
+                    throw new NotFound(String.format("Topic with id %s not found.", name));
+                });
+    }
+
     public Topic add(Topic topic) {
-        validateNameIsUnique(topic.getName());
+        validateNameIsTaken(topic.getName());
         logger.info("Topic with name '{}' created.", topic.getName());
         return this.topicRepository.save(topic);
     }
 
-    private void validateNameIsUnique(String name) {
-        if (!this.topicRepository.existsByName(name)) {
-            logger.warn("Topic with name '{}' does not exist.", name);
-            throw new BadRequest(String.format("Topic with name %s does not exist.", name));
-        }
-    }
-
     public Topic update(String topicId, Topic topic) {
         existsById(topicId);
-        validateNameIsUnique(topic.getName());
+        validateNameIsNotTaken(topic.getName());
         topic.setId(topicId);
         logger.info("Topic with id '{}' updated.", topic.getId());
         return this.topicRepository.save(topic);
@@ -46,6 +47,20 @@ public record TopicService(TopicRepository topicRepository, Logger logger) {
         existsById(topicId);
         logger.info("Topic with id '{}' deleted.", topicId);
         this.topicRepository.deleteById(topicId);
+    }
+
+    private void validateNameIsNotTaken(String name) {
+        if (this.topicRepository.existsByName(name)) {
+            logger.warn("Name '{}' is already taken", name);
+            throw new BadRequest(String.format("Topic with name %s already exists", name));
+        }
+    }
+
+    private void validateNameIsTaken(String name) {
+        if (this.topicRepository.existsByName(name)) {
+            logger.warn("Topic with name '{}' already exists.", name);
+            throw new BadRequest(String.format("Topic with name %s already exists.", name));
+        }
     }
 
     private void existsById(String topicId) {
