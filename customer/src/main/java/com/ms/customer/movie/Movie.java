@@ -1,12 +1,13 @@
 package com.ms.customer.movie;
 
 import com.ms.customer.shared.entities.TimeTrackable;
+import com.ms.customer.topic.Topic;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.sql.Time;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +23,12 @@ public class Movie extends TimeTrackable {
     @Column(nullable = false)
     protected Time duration;
     protected String classification;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "topics_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private Set<Topic> topics;
 
     @Override
     public boolean equals(Object o) {
