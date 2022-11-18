@@ -22,7 +22,7 @@ public class Topic extends TimeTrackable {
     protected String name;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "topics_movie",
+    @JoinTable(name = "topic_movie",
             joinColumns = @JoinColumn(name = "topic_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> movies = new LinkedHashSet<>();
