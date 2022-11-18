@@ -18,7 +18,6 @@ import java.util.Set;
 @Entity
 public class Topic extends TimeTrackable {
     @Column(nullable = false, unique = true)
-    @NaturalId
     protected String name;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
