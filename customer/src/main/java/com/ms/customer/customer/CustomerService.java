@@ -18,14 +18,14 @@ public record CustomerService(CustomerRepository customerRepository, Logger logg
     public Customer getById(String customerId) {
         return this.customerRepository.findById(customerId)
                 .orElseThrow(() -> {
-                    logger.info("Customer with id '{}' not found", customerId);
+                    logger.warn("Customer with id '{}' not found", customerId);
                     throw new NotFound(String.format("Customer with id %s not found!", customerId));
                 });
     }
 
     public Customer add(Customer customer) {
         emailIsTaken(customer.getEmail());
-        log.info("New customer with email '{}' created.", customer.email);
+        log.info("Customer with email '{}' created.", customer.getEmail());
         // TODO: validate email format
         return customerRepository.save(customer);
     }
@@ -34,29 +34,27 @@ public record CustomerService(CustomerRepository customerRepository, Logger logg
         validateCustomerExists(customerId);
         emailIsTaken(customer.getEmail());
         customer.setId(customerId);
-        log.info("Customer with id '{}' updated to: '{}'.", customerId, customer);
+        log.info("Customer with id '{}' updated.", customerId);
         // TODO: hash password
         return this.customerRepository.save(customer);
     }
 
     public void delete(String customerId) {
-        if (!this.customerRepository.existsById(customerId)) {
-            throw new NotFound(String.format("Customer with id %s not found!", customerId));
-        }
+        validateCustomerExists(customerId);
         this.logger.info("Customer with id '{}' deleted.", customerId);
         this.customerRepository.deleteById(customerId);
     }
 
     private void emailIsTaken(String email) {
         if (this.customerRepository.existsByEmail(email)) {
-            log.info("Email '{}' already taken", email);
+            log.warn("Email '{}' already taken", email);
             throw new BadRequest(String.format("Email %s already taken!", email));
         }
     }
 
     private void validateCustomerExists(String customerId) {
         if (!this.customerRepository.existsById(customerId)) {
-            log.info("Customer with id '{}' does not exist", customerId);
+            log.warn("Customer with id '{}' does not exist", customerId);
             throw new BadRequest(String.format("Customer with id %s does not exist", customerId));
         }
     }
