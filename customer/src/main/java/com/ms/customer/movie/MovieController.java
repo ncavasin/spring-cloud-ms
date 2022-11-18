@@ -1,7 +1,6 @@
 package com.ms.customer.movie;
 
 import com.ms.customer.movie.dto.MovieConverter;
-import com.ms.customer.movie.dto.MovieCreationDto;
 import com.ms.customer.movie.dto.MovieDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +22,8 @@ public record MovieController(MovieService movieService) {
     }
 
     @PostMapping
-    public MovieDto addMovie(@Validated @RequestBody MovieCreationDto movieCreationDto) {
-        return MovieConverter.convert(movieService.addMovie(MovieConverter.convert(movieCreationDto)));
+    public MovieDto addMovie(@Validated @RequestBody MovieDto movieDto) {
+        return MovieConverter.convert(movieService.addMovie(MovieConverter.convert(movieDto)));
     }
 
     @PatchMapping("/{movieId}")
