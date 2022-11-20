@@ -1,6 +1,6 @@
-package com.ms.customer.screenFormat.dto;
+package com.ms.customer.screenFormat.entity.dto;
 
-import com.ms.customer.screenFormat.ScreenFormat;
+import com.ms.customer.screenFormat.entity.ScreenFormat;
 
 import java.util.List;
 import java.util.stream.Collectors;

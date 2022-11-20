@@ -1,7 +1,6 @@
-package com.ms.customer.shared.converters;
+package com.ms.customer.branch.entity.dto;
 
 import com.ms.customer.branch.entity.Branch;
-import com.ms.customer.branch.entity.dto.BranchDto;
 import com.ms.customer.shared.entities.AbstractEntity;
 
 import java.util.Set;

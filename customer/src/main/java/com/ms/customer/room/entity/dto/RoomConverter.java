@@ -1,7 +1,6 @@
-package com.ms.customer.shared.converters;
+package com.ms.customer.room.entity.dto;
 
 import com.ms.customer.room.entity.Room;
-import com.ms.customer.room.entity.dto.RoomDto;
 
 import java.util.Set;
 import java.util.stream.Collectors;

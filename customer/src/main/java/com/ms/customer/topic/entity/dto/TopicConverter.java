@@ -1,7 +1,7 @@
-package com.ms.customer.shared.converters;
+package com.ms.customer.topic.entity.dto;
 
+import com.ms.customer.movie.entity.dto.MovieConverter;
 import com.ms.customer.topic.entity.Topic;
-import com.ms.customer.topic.entity.dto.TopicDto;
 
 import java.util.HashSet;
 import java.util.Set;
