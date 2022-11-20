@@ -15,7 +15,7 @@ public record ShowController(ShowService showService) {
 
     @GetMapping("/all")
     public Set<ShowDto> findAll() {
-        return null;
+        return ShowConverter.convert(this.showService.findAll());
     }
 
     @GetMapping("/{showId}")

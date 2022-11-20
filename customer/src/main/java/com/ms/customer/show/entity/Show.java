@@ -20,11 +20,11 @@ import java.sql.Time;
 @Entity
 public class Show extends TimeTrackable {
     @Column(nullable = false)
-    protected Time begin;
-    @Column(nullable = false)
-    protected Time end;
-    @Column(nullable = false)
     protected Date date;
+
+    protected Time beginTime;
+
+    protected Time endTime;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     protected Movie movie;

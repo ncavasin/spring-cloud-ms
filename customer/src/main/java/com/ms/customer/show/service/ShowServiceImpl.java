@@ -5,8 +5,8 @@ import com.ms.customer.movie.service.MovieService;
 import com.ms.customer.room.entity.Room;
 import com.ms.customer.room.service.RoomService;
 import com.ms.customer.shared.exceptions.NotFound;
-import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
+import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.repository.ShowRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -46,8 +46,8 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
         logger.info("Show for movie '{}' in room '{}' with date '{}' created.", movie.getTitle(), room.getName(), showDto.date());
         return this.showRepository.save(Show.builder()
                 .date(showDto.date())
-                .begin(showDto.begin())
-                .end(showDto.end())
+                .beginTime(showDto.beginTime())
+                .endTime(showDto.endTime())
                 .movie(movie)
                 .room(room)
                 .build());
@@ -59,8 +59,8 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
         final Movie movie = this.movieService.findById(showDto.movieId());
         final Room room = this.roomService.findById(showDto.roomId());
         found.setDate(showDto.date());
-        found.setBegin(showDto.begin());
-        found.setEnd(showDto.end());
+        found.setBeginTime(showDto.beginTime());
+        found.setEndTime(showDto.endTime());
         found.setMovie(movie);
         found.setRoom(room);
         logger.info("Show with id '{}' updated.", id);

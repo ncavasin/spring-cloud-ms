@@ -6,5 +6,5 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Builder
-public record ShowDto(Date date, Time begin, Time end, String movieId, String roomId) {
+public record ShowDto(String id, Date date, Time beginTime, Time endTime, String movieId, String roomId) {
 }

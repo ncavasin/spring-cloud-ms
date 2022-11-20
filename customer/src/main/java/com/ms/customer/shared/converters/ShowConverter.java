@@ -1,7 +1,7 @@
 package com.ms.customer.shared.converters;
 
-import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
+import com.ms.customer.show.entity.dto.ShowDto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,9 +9,10 @@ import java.util.stream.Collectors;
 public class ShowConverter {
     public static ShowDto convert(Show show) {
         return ShowDto.builder()
+                .id(show.getId())
                 .date(show.getDate())
-                .begin(show.getBegin())
-                .end(show.getEnd())
+                .beginTime(show.getBeginTime())
+                .endTime(show.getEndTime())
                 .movieId(show.getMovie().getId())
                 .roomId(show.getRoom().getId())
                 .build();
