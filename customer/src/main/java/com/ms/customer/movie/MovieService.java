@@ -1,19 +1,24 @@
 package com.ms.customer.movie;
 
+import com.ms.customer.movie.dto.MovieDto;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
+import com.ms.customer.topic.Topic;
+import com.ms.customer.topic.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public record MovieService(MovieRepository movieRepository, Logger logger) {
+public record MovieService(MovieRepository movieRepository, Logger logger, TopicService topicService) {
 
-    public List<Movie> getAll() {
-        return this.movieRepository.findAll();
+    public Set<Movie> getAll() {
+        return new HashSet<>(this.movieRepository.findAll());
     }
 
     public Movie getById(String movieId) {
@@ -24,19 +29,26 @@ public record MovieService(MovieRepository movieRepository, Logger logger) {
                 });
     }
 
-    public Movie addMovie(Movie movie) {
-        logger.info("Movie with title '{}' created.", movie.getTitle());
-        return this.movieRepository.save(movie);
+    public Movie addMovie(MovieDto movieDto) {
+        return this.movieRepository.save(Movie.builder()
+                .title(movieDto.title())
+                .synopsis(movieDto.synopsis())
+                .rating(movieDto.rating())
+                .duration(movieDto.duration())
+                .classification(movieDto.classification())
+                .topics(fetchTopics(movieDto.topicIds()))
+                .build());
     }
 
 
-    public Movie updateMovie(String movieId, Movie movie) {
+    public Movie updateMovie(String movieId, MovieDto movieDto) {
         Movie found = this.getById(movieId);
-        found.setTitle(movie.title);
-        found.setRating(movie.getRating());
-        found.setSynopsis(movie.synopsis);
-        found.setDuration(movie.duration);
-        found.setClassification(movie.getClassification());
+        found.setTitle(movieDto.title());
+        found.setRating(movieDto.rating());
+        found.setSynopsis(movieDto.synopsis());
+        found.setDuration(movieDto.duration());
+        found.setClassification(movieDto.classification());
+        found.setTopics(fetchTopics(movieDto.topicIds()));
         logger.info("Movie with id '{}' updated.", movieId);
         return this.movieRepository.save(found);
     }
@@ -47,5 +59,18 @@ public record MovieService(MovieRepository movieRepository, Logger logger) {
             throw new BadRequest(String.format("Movie with id %s does not exist.", movieId));
         }
         this.movieRepository.deleteById(movieId);
+    }
+
+    private Set<Topic> fetchTopics(Set<String> topicIds) {
+        try {
+            return topicIds
+                    .stream()
+                    .map(this.topicService::getReferenceById)
+                    .collect(Collectors.toSet());
+
+        } catch (Exception e) {
+            log.error("A topic from this list {} was not found.", topicIds);
+            throw new NotFound(String.format("A Topic from this list %s was not found", topicIds));
+        }
     }
 }

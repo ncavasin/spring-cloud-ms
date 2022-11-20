@@ -5,14 +5,14 @@ import com.ms.customer.movie.dto.MovieDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/movie")
 public record MovieController(MovieService movieService) {
 
     @GetMapping("/all")
-    public List<MovieDto> getAll() {
+    public Set<MovieDto> getAll() {
         return MovieConverter.convert(movieService.getAll());
     }
 
@@ -23,12 +23,12 @@ public record MovieController(MovieService movieService) {
 
     @PostMapping
     public MovieDto addMovie(@Validated @RequestBody MovieDto movieDto) {
-        return MovieConverter.convert(movieService.addMovie(MovieConverter.convert(movieDto)));
+        return MovieConverter.convert(movieService.addMovie(movieDto));
     }
 
     @PatchMapping("/{movieId}")
     public MovieDto updateMovie(@PathVariable("movieId") String movieId, @Validated @RequestBody MovieDto movieDto) {
-        return MovieConverter.convert(movieService.updateMovie(movieId, MovieConverter.convert(movieDto)));
+        return MovieConverter.convert(movieService.updateMovie(movieId, movieDto));
     }
 
     @DeleteMapping("/{movieId}")
