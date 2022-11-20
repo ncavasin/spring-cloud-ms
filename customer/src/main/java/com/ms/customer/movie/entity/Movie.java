@@ -28,7 +28,7 @@ public class Movie extends TimeTrackable {
     @JoinTable(name = "topic_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
-    private Set<Topic> topics;
+    protected Set<Topic> topics;
 
     @Override
     public boolean equals(Object o) {
