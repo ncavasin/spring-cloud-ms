@@ -1,18 +1,18 @@
 package com.ms.customer.topic;
 
-import com.ms.customer.topic.dto.TopicConverter;
+import com.ms.customer.shared.converters.TopicConverter;
 import com.ms.customer.topic.dto.TopicDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/topic")
 public record TopicController(TopicService topicService) {
 
     @GetMapping("/all")
-    public List<TopicDto> getAll() {
+    public Set<TopicDto> getAll() {
         return TopicConverter.convert(this.topicService.findAll());
     }
 

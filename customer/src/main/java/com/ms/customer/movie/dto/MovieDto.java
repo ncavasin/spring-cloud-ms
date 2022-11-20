@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Builder
 public record MovieDto(String id, String title, Double rating, String synopsis, Time duration, String classification,
-                       Set<Topic> topics) {
+                       Set<String> topicIds) {
 }

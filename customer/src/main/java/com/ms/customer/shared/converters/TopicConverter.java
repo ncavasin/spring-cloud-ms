@@ -1,8 +1,10 @@
-package com.ms.customer.topic.dto;
+package com.ms.customer.shared.converters;
 
 import com.ms.customer.topic.Topic;
+import com.ms.customer.topic.dto.TopicDto;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TopicConverter {
@@ -11,18 +13,22 @@ public class TopicConverter {
         return TopicDto.builder()
                 .id(topic.getId())
                 .name(topic.getName())
+                .movieIds(MovieConverter.collectMovieIds(topic.getMovies()))
                 .build();
     }
 
-    public static List<TopicDto> convert(List<Topic> topics) {
+    public static Set<TopicDto> convert(Set<Topic> topics) {
         return topics.stream()
                 .map(TopicConverter::convert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public static Topic convert(TopicDto topicDto) {
         return Topic.builder()
                 .name(topicDto.name())
+                .movies(new HashSet<>())
                 .build();
     }
+
+
 }

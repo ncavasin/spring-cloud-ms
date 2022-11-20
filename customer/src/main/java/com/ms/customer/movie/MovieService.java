@@ -4,7 +4,7 @@ import com.ms.customer.movie.dto.MovieDto;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import com.ms.customer.topic.Topic;
-import com.ms.customer.topic.TopicService;
+import com.ms.customer.topic.TopicServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public record MovieService(MovieRepository movieRepository, Logger logger, TopicService topicService) {
+public record MovieService(MovieRepository movieRepository, Logger logger, TopicServiceImpl topicServiceImpl) {
 
     public Set<Movie> getAll() {
         return new HashSet<>(this.movieRepository.findAll());
@@ -65,7 +65,7 @@ public record MovieService(MovieRepository movieRepository, Logger logger, Topic
         try {
             return topicIds
                     .stream()
-                    .map(this.topicService::getReferenceById)
+                    .map(this.topicServiceImpl::findById)
                     .collect(Collectors.toSet());
 
         } catch (Exception e) {

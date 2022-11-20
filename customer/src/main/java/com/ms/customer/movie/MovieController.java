@@ -1,6 +1,6 @@
 package com.ms.customer.movie;
 
-import com.ms.customer.movie.dto.MovieConverter;
+import com.ms.customer.shared.converters.MovieConverter;
 import com.ms.customer.movie.dto.MovieDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
