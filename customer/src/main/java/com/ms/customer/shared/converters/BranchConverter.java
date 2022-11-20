@@ -1,9 +1,9 @@
-package com.ms.customer.branch.dto;
+package com.ms.customer.shared.converters;
 
-import com.ms.customer.branch.Branch;
-import com.ms.customer.branch.BranchDto;
+import com.ms.customer.branch.entity.Branch;
+import com.ms.customer.branch.entity.dto.BranchDto;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BranchConverter {
@@ -16,17 +16,10 @@ public class BranchConverter {
                 .build();
     }
 
-    public static List<BranchDto> convert(List<Branch> branches) {
+    public static Set<BranchDto> convert(Set<Branch> branches) {
         return branches.stream()
                 .map(BranchConverter::convert)
-                .collect(Collectors.toList());
-    }
-
-    public static Branch convert(BranchCreationDto branchCreationDto) {
-        return Branch.builder()
-                .name(branchCreationDto.name())
-                .zipCode(branchCreationDto.zipCode())
-                .build();
+                .collect(Collectors.toSet());
     }
 
     public static Branch convert(BranchDto branchDto) {

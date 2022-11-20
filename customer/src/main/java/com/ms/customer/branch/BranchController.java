@@ -1,40 +1,41 @@
 package com.ms.customer.branch;
 
 
-import com.ms.customer.branch.dto.BranchConverter;
-import com.ms.customer.branch.dto.BranchCreationDto;
+import com.ms.customer.branch.entity.dto.BranchDto;
+import com.ms.customer.branch.service.BranchService;
+import com.ms.customer.shared.converters.BranchConverter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/branch")
 public record BranchController(BranchService branchService) {
 
     @GetMapping("/all")
-    public List<BranchDto> getAll() {
-        return BranchConverter.convert(this.branchService.getAll());
+    public Set<BranchDto> getAll() {
+        return BranchConverter.convert(this.branchService.findAll());
     }
 
     @GetMapping("/{branchId}")
     public BranchDto getById(@PathVariable("branchId") String branchId) {
-        return BranchConverter.convert(this.branchService.getById(branchId));
+        return BranchConverter.convert(this.branchService.findById(branchId));
     }
 
     @GetMapping("/name/{branchName}")
     public BranchDto getByName(@PathVariable("branchName") String branchName) {
-        return BranchConverter.convert(this.branchService.getByName(branchName));
+        return BranchConverter.convert(this.branchService.findByName(branchName));
     }
 
     @PostMapping()
-    public BranchDto add(@Validated @RequestBody BranchCreationDto branchCreationDto) {
-        return BranchConverter.convert(this.branchService.add(BranchConverter.convert(branchCreationDto)));
+    public BranchDto add(@Validated @RequestBody BranchDto branchDto) {
+        return BranchConverter.convert(this.branchService.add(branchDto));
     }
 
     @PatchMapping("/{branchId}")
     public BranchDto update(@PathVariable("branchId") String branchId, @Validated @RequestBody BranchDto branchDto) {
-        return BranchConverter.convert(branchService.update(branchId, BranchConverter.convert(branchDto)));
+        return BranchConverter.convert(branchService.update(branchId, branchDto));
     }
 
     @DeleteMapping("/{branchId}")

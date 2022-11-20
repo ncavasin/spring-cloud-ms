@@ -1,5 +1,6 @@
-package com.ms.customer.branch;
+package com.ms.customer.branch.repository;
 
+import com.ms.customer.branch.entity.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
