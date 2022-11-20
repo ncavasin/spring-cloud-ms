@@ -5,12 +5,13 @@ import com.ms.customer.shared.exceptions.NotFound;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public record TopicService(TopicRepository topicRepository, Logger logger) {
-    public List<Topic> findAll() {
-        return this.topicRepository.findAll();
+    public Set<Topic> findAll() {
+        return new HashSet<>(this.topicRepository.findAll());
     }
 
     public Topic findById(String topicId) {
@@ -29,8 +30,12 @@ public record TopicService(TopicRepository topicRepository, Logger logger) {
                 });
     }
 
+    public Topic getReferenceById(String topicId) {
+        return this.topicRepository.getReferenceById(topicId);
+    }
+
     public Topic add(Topic topic) {
-        validateNameIsTaken(topic.getName());
+        validateNameIsNotTaken(topic.getName());
         logger.info("Topic with name '{}' created.", topic.getName());
         return this.topicRepository.save(topic);
     }
@@ -51,15 +56,8 @@ public record TopicService(TopicRepository topicRepository, Logger logger) {
 
     private void validateNameIsNotTaken(String name) {
         if (this.topicRepository.existsByName(name)) {
-            logger.warn("Name '{}' is already taken", name);
-            throw new BadRequest(String.format("Topic with name %s already exists", name));
-        }
-    }
-
-    private void validateNameIsTaken(String name) {
-        if (this.topicRepository.existsByName(name)) {
-            logger.warn("Topic with name '{}' already exists.", name);
-            throw new BadRequest(String.format("Topic with name %s already exists.", name));
+            logger.warn("Topic name '{}' is already taken.", name);
+            throw new BadRequest(String.format("Topic name %s already exists.", name));
         }
     }
 
