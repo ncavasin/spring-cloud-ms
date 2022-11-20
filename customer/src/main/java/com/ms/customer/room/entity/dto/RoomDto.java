@@ -1,4 +1,4 @@
-package com.ms.customer.room.dto;
+package com.ms.customer.room.entity.dto;
 
 import lombok.Builder;
 

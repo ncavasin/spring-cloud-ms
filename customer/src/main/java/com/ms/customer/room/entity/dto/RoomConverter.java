@@ -1,13 +1,13 @@
-package com.ms.customer.room.dto;
+package com.ms.customer.room.entity.dto;
 
-import com.ms.customer.room.Room;
+import com.ms.customer.room.entity.Room;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RoomConverter {
 
-    public static Room convert (RoomDto roomDto){
+    public static Room convert(RoomDto roomDto) {
         return Room.builder()
                 .name(roomDto.name())
                 .build();
@@ -20,9 +20,9 @@ public class RoomConverter {
                 .build();
     }
 
-    public static List<RoomDto> convert(List<Room> rooms) {
+    public static Set<RoomDto> convert(Set<Room> rooms) {
         return rooms.stream()
                 .map(RoomConverter::convert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

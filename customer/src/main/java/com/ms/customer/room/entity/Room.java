@@ -1,4 +1,4 @@
-package com.ms.customer.room;
+package com.ms.customer.room.entity;
 
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
