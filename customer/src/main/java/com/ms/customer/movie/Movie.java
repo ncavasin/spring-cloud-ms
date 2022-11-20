@@ -24,8 +24,8 @@ public class Movie extends TimeTrackable {
     protected Time duration;
     protected String classification;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "topics_movie",
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(name = "topic_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private Set<Topic> topics;
