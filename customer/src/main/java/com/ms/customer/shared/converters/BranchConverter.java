@@ -2,6 +2,7 @@ package com.ms.customer.shared.converters;
 
 import com.ms.customer.branch.entity.Branch;
 import com.ms.customer.branch.entity.dto.BranchDto;
+import com.ms.customer.shared.entities.AbstractEntity;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,6 +14,10 @@ public class BranchConverter {
                 .id(branch.getId())
                 .name(branch.getName())
                 .zipCode(branch.getZipCode())
+                .roomIds(branch.getRooms()
+                        .stream()
+                        .map(AbstractEntity::getId)
+                        .collect(Collectors.toSet()))
                 .build();
     }
 
@@ -20,12 +25,5 @@ public class BranchConverter {
         return branches.stream()
                 .map(BranchConverter::convert)
                 .collect(Collectors.toSet());
-    }
-
-    public static Branch convert(BranchDto branchDto) {
-        return Branch.builder()
-                .name(branchDto.name())
-                .zipCode(branchDto.zipCode())
-                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.ms.customer.room.service;
 
+import com.ms.customer.branch.service.BranchService;
 import com.ms.customer.room.entity.Room;
 import com.ms.customer.room.entity.dto.RoomDto;
 import com.ms.customer.room.repository.RoomRepository;
@@ -14,7 +15,8 @@ import java.util.Set;
 
 @Slf4j
 @Service
-public record RoomServiceImpl(RoomRepository roomRepository, Logger logger) implements RoomService {
+public record RoomServiceImpl(RoomRepository roomRepository, Logger logger,
+                              BranchService branchService) implements RoomService {
     public Set<Room> findAll() {
         return new HashSet<>(this.roomRepository.findAll());
     }
@@ -31,6 +33,7 @@ public record RoomServiceImpl(RoomRepository roomRepository, Logger logger) impl
         logger.info("Room with name '{}' created.", roomDto.name());
         return this.roomRepository.save(Room.builder()
                 .name(roomDto.name())
+                .branch(this.branchService.findById(roomDto.branchId()))
                 .build());
     }
 
