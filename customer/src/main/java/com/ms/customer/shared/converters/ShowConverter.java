@@ -1,6 +1,6 @@
 package com.ms.customer.shared.converters;
 
-import com.ms.customer.show.dto.ShowDto;
+import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
 
 import java.util.Set;

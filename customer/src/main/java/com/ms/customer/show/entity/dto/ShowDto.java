@@ -1,4 +1,4 @@
-package com.ms.customer.show.dto;
+package com.ms.customer.show.entity.dto;
 
 import lombok.Builder;
 

@@ -5,7 +5,7 @@ import com.ms.customer.movie.service.MovieService;
 import com.ms.customer.room.entity.Room;
 import com.ms.customer.room.service.RoomService;
 import com.ms.customer.shared.exceptions.NotFound;
-import com.ms.customer.show.dto.ShowDto;
+import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
 import com.ms.customer.show.repository.ShowRepository;
 import lombok.extern.slf4j.Slf4j;

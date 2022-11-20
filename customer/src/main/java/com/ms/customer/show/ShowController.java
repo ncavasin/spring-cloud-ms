@@ -1,7 +1,7 @@
 package com.ms.customer.show;
 
 import com.ms.customer.shared.converters.ShowConverter;
-import com.ms.customer.show.dto.ShowDto;
+import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.service.ShowService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

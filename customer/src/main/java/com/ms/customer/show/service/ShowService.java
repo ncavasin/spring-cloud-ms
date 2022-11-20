@@ -1,6 +1,6 @@
 package com.ms.customer.show.service;
 
-import com.ms.customer.show.dto.ShowDto;
+import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
 
 import java.sql.Date;
