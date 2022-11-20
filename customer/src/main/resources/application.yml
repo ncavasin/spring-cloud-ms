@@ -27,7 +27,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
-        format_sql: false
+        format_sql: true
     hibernate:
       ddl-auto: update
     show-sql: true
