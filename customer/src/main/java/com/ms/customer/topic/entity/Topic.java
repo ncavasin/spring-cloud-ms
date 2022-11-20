@@ -1,6 +1,6 @@
 package com.ms.customer.topic.entity;
 
-import com.ms.customer.movie.Movie;
+import com.ms.customer.movie.entity.Movie;
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
 

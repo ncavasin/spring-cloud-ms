@@ -1,7 +1,7 @@
 package com.ms.customer.shared.converters;
 
-import com.ms.customer.movie.Movie;
-import com.ms.customer.movie.dto.MovieDto;
+import com.ms.customer.movie.entity.Movie;
+import com.ms.customer.movie.entity.dto.MovieDto;
 import com.ms.customer.shared.entities.AbstractEntity;
 
 import java.util.Set;

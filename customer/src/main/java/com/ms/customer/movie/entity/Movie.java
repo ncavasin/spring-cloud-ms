@@ -1,4 +1,4 @@
-package com.ms.customer.movie;
+package com.ms.customer.movie.entity;
 
 import com.ms.customer.shared.entities.TimeTrackable;
 import com.ms.customer.topic.entity.Topic;

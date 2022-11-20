@@ -1,4 +1,4 @@
-package com.ms.customer.movie.dto;
+package com.ms.customer.movie.entity.dto;
 
 import lombok.Builder;
 

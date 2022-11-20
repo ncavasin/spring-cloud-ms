@@ -1,6 +1,8 @@
-package com.ms.customer.movie;
+package com.ms.customer.movie.service;
 
-import com.ms.customer.movie.dto.MovieDto;
+import com.ms.customer.movie.entity.Movie;
+import com.ms.customer.movie.entity.dto.MovieDto;
+import com.ms.customer.movie.repository.MovieRepository;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import com.ms.customer.topic.entity.Topic;
@@ -15,21 +17,22 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public record MovieService(MovieRepository movieRepository, Logger logger, TopicServiceImpl topicServiceImpl) {
+public record MovieServiceImpl(MovieRepository movieRepository, Logger logger,
+                               TopicServiceImpl topicServiceImpl) implements MovieService {
 
-    public Set<Movie> getAll() {
+    public Set<Movie> findAll() {
         return new HashSet<>(this.movieRepository.findAll());
     }
 
-    public Movie getById(String movieId) {
-        return this.movieRepository.findById(movieId)
+    public Movie findById(String id) {
+        return this.movieRepository.findById(id)
                 .orElseThrow(() -> {
-                    logger.warn("Movie with id '{}' does not exist.", movieId);
-                    throw new NotFound(String.format("Movie with id %s not found.", movieId));
+                    logger.warn("Movie with id '{}' does not exist.", id);
+                    throw new NotFound(String.format("Movie with id %s not found.", id));
                 });
     }
 
-    public Movie addMovie(MovieDto movieDto) {
+    public Movie add(MovieDto movieDto) {
         return this.movieRepository.save(Movie.builder()
                 .title(movieDto.title())
                 .synopsis(movieDto.synopsis())
@@ -41,19 +44,19 @@ public record MovieService(MovieRepository movieRepository, Logger logger, Topic
     }
 
 
-    public Movie updateMovie(String movieId, MovieDto movieDto) {
-        Movie found = this.getById(movieId);
+    public Movie update(String id, MovieDto movieDto) {
+        Movie found = this.findById(id);
         found.setTitle(movieDto.title());
         found.setRating(movieDto.rating());
         found.setSynopsis(movieDto.synopsis());
         found.setDuration(movieDto.duration());
         found.setClassification(movieDto.classification());
         found.setTopics(fetchTopics(movieDto.topicIds()));
-        logger.info("Movie with id '{}' updated.", movieId);
+        logger.info("Movie with id '{}' updated.", id);
         return this.movieRepository.save(found);
     }
 
-    public void deleteMovie(String movieId) {
+    public void delete(String movieId) {
         if (!this.movieRepository.existsById(movieId)) {
             logger.warn("Could not delete Movie with id '{}'. It does not exist.", movieId);
             throw new BadRequest(String.format("Movie with id %s does not exist.", movieId));
