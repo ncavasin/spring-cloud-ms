@@ -23,6 +23,4 @@ public class Room extends TimeTrackable {
     private Branch branch;
 
     //TODO: protected List<Seat> seats;
-    //TODO: bidirectional List<Show> shows;
-
 }

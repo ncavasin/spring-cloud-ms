@@ -1,6 +1,7 @@
 package com.ms.customer.movie.entity;
 
 import com.ms.customer.shared.entities.TimeTrackable;
+import com.ms.customer.show.entity.Show;
 import com.ms.customer.topic.entity.Topic;
 import lombok.*;
 
@@ -25,7 +26,13 @@ public class Movie extends TimeTrackable {
     protected String classification;
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
-    @JoinTable(name = "topic_movie",
+    @JoinTable(name = "movie_show",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "room_id"))
+    protected Set<Show> shows;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(name = "movie_topic",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
     protected Set<Topic> topics;
