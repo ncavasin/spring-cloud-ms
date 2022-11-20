@@ -1,9 +1,8 @@
-package com.ms.customer.topic;
+package com.ms.customer.topic.entity;
 
 import com.ms.customer.movie.Movie;
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;

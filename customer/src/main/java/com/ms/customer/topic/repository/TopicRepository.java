@@ -1,5 +1,6 @@
-package com.ms.customer.topic;
+package com.ms.customer.topic.repository;
 
+import com.ms.customer.topic.entity.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package com.ms.customer.movie.dto;
 
-import com.ms.customer.topic.Topic;
 import lombok.Builder;
 
 import java.sql.Time;

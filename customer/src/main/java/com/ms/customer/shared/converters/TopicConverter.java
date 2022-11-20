@@ -1,7 +1,7 @@
 package com.ms.customer.shared.converters;
 
-import com.ms.customer.topic.Topic;
-import com.ms.customer.topic.dto.TopicDto;
+import com.ms.customer.topic.entity.Topic;
+import com.ms.customer.topic.entity.dto.TopicDto;
 
 import java.util.HashSet;
 import java.util.Set;

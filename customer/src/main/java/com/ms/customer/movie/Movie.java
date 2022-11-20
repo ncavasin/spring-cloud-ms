@@ -1,7 +1,7 @@
 package com.ms.customer.movie;
 
 import com.ms.customer.shared.entities.TimeTrackable;
-import com.ms.customer.topic.Topic;
+import com.ms.customer.topic.entity.Topic;
 import lombok.*;
 
 import javax.persistence.*;

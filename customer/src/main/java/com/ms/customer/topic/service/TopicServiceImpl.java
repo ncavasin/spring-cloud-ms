@@ -1,7 +1,9 @@
-package com.ms.customer.topic;
+package com.ms.customer.topic.service;
 
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
+import com.ms.customer.topic.entity.Topic;
+import com.ms.customer.topic.repository.TopicRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 

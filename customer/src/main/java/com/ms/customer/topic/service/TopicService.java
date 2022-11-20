@@ -1,4 +1,6 @@
-package com.ms.customer.topic;
+package com.ms.customer.topic.service;
+
+import com.ms.customer.topic.entity.Topic;
 
 import java.util.Set;
 
