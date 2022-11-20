@@ -1,12 +1,13 @@
 package com.ms.customer.show;
 
-import com.ms.customer.shared.converters.ShowConverter;
+import com.ms.customer.show.entity.dto.ShowConverter;
 import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.service.ShowService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Set;
 
 @RestController
@@ -26,6 +27,13 @@ public record ShowController(ShowService showService) {
     @GetMapping("/date/{date}")
     public Set<ShowDto> findByDate(@PathVariable("date") Date date) {
         return ShowConverter.convert(this.showService.findByDate(date));
+    }
+
+    @GetMapping("/date/{date}/from/{beginTime}/end/{endTime}")
+    public Set<ShowDto> findByDateAndBeginTimeAndEndTime(@PathVariable("date") Date date,
+                                                         @PathVariable("beginTime") Time beginTime,
+                                                         @PathVariable("endTime") Time endTime) {
+        return ShowConverter.convert(this.showService.findByDateAndBeginTimeAndEndTime(date, beginTime, endTime));
     }
 
     @PostMapping

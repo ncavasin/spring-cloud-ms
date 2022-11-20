@@ -1,6 +1,6 @@
 package com.ms.customer.room;
 
-import com.ms.customer.shared.converters.RoomConverter;
+import com.ms.customer.room.entity.dto.RoomConverter;
 import com.ms.customer.room.entity.dto.RoomDto;
 import com.ms.customer.room.service.RoomService;
 import org.springframework.validation.annotation.Validated;

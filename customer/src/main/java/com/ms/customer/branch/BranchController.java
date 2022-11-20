@@ -3,7 +3,7 @@ package com.ms.customer.branch;
 
 import com.ms.customer.branch.entity.dto.BranchDto;
 import com.ms.customer.branch.service.BranchService;
-import com.ms.customer.shared.converters.BranchConverter;
+import com.ms.customer.branch.entity.dto.BranchConverter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

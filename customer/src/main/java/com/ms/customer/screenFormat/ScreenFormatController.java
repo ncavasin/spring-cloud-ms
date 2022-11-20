@@ -1,7 +1,8 @@
 package com.ms.customer.screenFormat;
 
-import com.ms.customer.screenFormat.dto.ScreenFormatConverter;
-import com.ms.customer.screenFormat.dto.ScreenFormatDto;
+import com.ms.customer.screenFormat.service.ScreenFormatService;
+import com.ms.customer.screenFormat.entity.dto.ScreenFormatConverter;
+import com.ms.customer.screenFormat.entity.dto.ScreenFormatDto;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

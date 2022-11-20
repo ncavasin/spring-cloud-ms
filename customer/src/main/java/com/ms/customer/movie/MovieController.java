@@ -2,7 +2,7 @@ package com.ms.customer.movie;
 
 import com.ms.customer.movie.entity.dto.MovieDto;
 import com.ms.customer.movie.service.MovieService;
-import com.ms.customer.shared.converters.MovieConverter;
+import com.ms.customer.movie.entity.dto.MovieConverter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

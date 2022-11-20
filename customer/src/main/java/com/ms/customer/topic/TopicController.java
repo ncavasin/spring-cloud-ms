@@ -1,6 +1,6 @@
 package com.ms.customer.topic;
 
-import com.ms.customer.shared.converters.TopicConverter;
+import com.ms.customer.topic.entity.dto.TopicConverter;
 import com.ms.customer.topic.entity.dto.TopicDto;
 import com.ms.customer.topic.service.TopicService;
 import org.springframework.validation.annotation.Validated;
