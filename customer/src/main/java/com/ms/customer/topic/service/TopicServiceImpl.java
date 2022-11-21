@@ -1,8 +1,11 @@
 package com.ms.customer.topic.service;
 
+import com.ms.customer.movie.entity.Movie;
+import com.ms.customer.movie.service.MovieService;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import com.ms.customer.topic.entity.Topic;
+import com.ms.customer.topic.entity.dto.TopicDto;
 import com.ms.customer.topic.repository.TopicRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -11,7 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) implements TopicService {
+public record TopicServiceImpl(TopicRepository topicRepository, Logger logger,
+                               MovieService movieService) implements TopicService {
     public Set<Topic> findAll() {
         return new HashSet<>(this.topicRepository.findAll());
     }
@@ -32,18 +36,23 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
                 });
     }
 
-    public Topic add(Topic topic) {
-        validateNameIsNotTaken(topic.getName());
-        logger.info("Topic with name '{}' created.", topic.getName());
-        return this.topicRepository.save(topic);
+    public Topic add(TopicDto topicDto) {
+        validateNameIsNotTaken(topicDto.name());
+        logger.info("Topic with name '{}' and movie ids '{}' created.", topicDto.name(), topicDto.movieIds());
+        return this.topicRepository.save(Topic.builder()
+                .name(topicDto.name())
+                .movies(fetchMovies(topicDto.movieIds()))
+                .build());
     }
 
-    public Topic update(String topicId, Topic topic) {
-        existsById(topicId);
-        validateNameIsNotTaken(topic.getName());
-        topic.setId(topicId);
-        logger.info("Topic with id '{}' updated.", topic.getId());
-        return this.topicRepository.save(topic);
+    public Topic update(String id, TopicDto topicDto) {
+        existsById(id);
+        validateNameIsNotTaken(topicDto.name());
+        Topic found = this.findById(id);
+        found.setName(topicDto.name());
+        found.setMovies(fetchMovies(topicDto.movieIds()));
+        logger.info("Topic with id '{}' updated.", topicDto.id());
+        return this.topicRepository.save(found);
     }
 
     public void delete(String topicId) {
@@ -61,8 +70,12 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
 
     private void existsById(String topicId) {
         if (!this.topicRepository.existsById(topicId)) {
-            logger.warn("Topic with id '{}' does not exsit.", topicId);
-            throw new BadRequest(String.format("Topic with id %s does not exists", topicId));
+            logger.warn("Could not delete Topic with id '{}'. It does not exist.", topicId);
+            throw new BadRequest(String.format("Topic with id %s does not exist.", topicId));
         }
+    }
+
+    private Set<Movie> fetchMovies(Set<String> movieIds) {
+        return movieService.findAllById(movieIds);
     }
 }

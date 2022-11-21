@@ -1,6 +1,7 @@
 package com.ms.customer.topic.service;
 
 import com.ms.customer.topic.entity.Topic;
+import com.ms.customer.topic.entity.dto.TopicDto;
 
 import java.util.Set;
 
@@ -12,9 +13,9 @@ public interface TopicService {
 
     Topic findByName(String name);
 
-    Topic add(Topic topic);
+    Topic add(TopicDto topicDto);
 
-    Topic update(String topicId, Topic topic);
+    Topic update(String id, TopicDto topicDto);
 
     void delete(String topicId);
 }
