@@ -31,6 +31,6 @@ public class Branch extends TimeTrackable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getZipCode(), getRooms());
+        return Objects.hash(getName(), getZipCode());
     }
 }
