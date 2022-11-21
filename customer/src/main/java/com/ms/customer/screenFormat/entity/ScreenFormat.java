@@ -1,10 +1,11 @@
-package com.ms.customer.screenFormat;
+package com.ms.customer.screenFormat.entity;
 
+import com.ms.customer.room.entity.Room;
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +19,6 @@ public class ScreenFormat extends TimeTrackable {
     protected Double screenHeight;
     protected Double screenWidth;
 
-    //TODO: protected List<Room> rooms;
+    @OneToMany(mappedBy = "screenFormat", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    protected Set<Room> rooms;
 }
