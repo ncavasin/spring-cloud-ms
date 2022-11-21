@@ -1,7 +1,5 @@
 package com.ms.customer.topic.service;
 
-import com.ms.customer.movie.entity.Movie;
-import com.ms.customer.movie.service.MovieService;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import com.ms.customer.topic.entity.Topic;
@@ -14,8 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public record TopicServiceImpl(TopicRepository topicRepository, Logger logger,
-                               MovieService movieService) implements TopicService {
+public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) implements TopicService {
     public Set<Topic> findAll() {
         return new HashSet<>(this.topicRepository.findAll());
     }
@@ -41,7 +38,7 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger,
         logger.info("Topic with name '{}' and movie ids '{}' created.", topicDto.name(), topicDto.movieIds());
         return this.topicRepository.save(Topic.builder()
                 .name(topicDto.name())
-                .movies(fetchMovies(topicDto.movieIds()))
+                .movies(new HashSet<>())
                 .build());
     }
 
@@ -50,7 +47,7 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger,
         validateNameIsNotTaken(topicDto.name());
         Topic found = this.findById(id);
         found.setName(topicDto.name());
-        found.setMovies(fetchMovies(topicDto.movieIds()));
+        found.setMovies(new HashSet<>());
         logger.info("Topic with id '{}' updated.", topicDto.id());
         return this.topicRepository.save(found);
     }
@@ -73,9 +70,5 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger,
             logger.warn("Could not delete Topic with id '{}'. It does not exist.", topicId);
             throw new BadRequest(String.format("Topic with id %s does not exist.", topicId));
         }
-    }
-
-    private Set<Movie> fetchMovies(Set<String> movieIds) {
-        return movieService.findAllById(movieIds);
     }
 }

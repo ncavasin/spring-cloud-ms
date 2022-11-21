@@ -1,7 +1,5 @@
 package com.ms.customer.screenFormat.service;
 
-import com.ms.customer.room.entity.Room;
-import com.ms.customer.room.service.RoomService;
 import com.ms.customer.screenFormat.entity.ScreenFormat;
 import com.ms.customer.screenFormat.entity.dto.ScreenFormatDto;
 import com.ms.customer.screenFormat.repository.ScreenFormatRepository;
@@ -17,7 +15,7 @@ import java.util.Set;
 @Slf4j
 @Service
 public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatRepository,
-                                      Logger logger, RoomService roomService) implements ScreenFormatService {
+                                      Logger logger) implements ScreenFormatService {
     public Set<ScreenFormat> findAll() {
         return new HashSet<>(this.screenFormatRepository.findAll());
     }
@@ -37,7 +35,7 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
                 .name(screenFormatDto.name())
                 .screenHeight(screenFormatDto.screenHeight())
                 .screenWidth(screenFormatDto.screenWidth())
-                .rooms(fetchRooms(screenFormatDto.roomIds()))
+                .rooms(new HashSet<>())
                 .build());
     }
 
@@ -46,7 +44,7 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
         found.setName(screenFormatDto.name());
         found.setScreenHeight(screenFormatDto.screenHeight());
         found.setScreenWidth(screenFormatDto.screenWidth());
-        found.setRooms(fetchRooms(screenFormatDto.roomIds()));
+        found.setRooms(new HashSet<>());
         logger.info("ScreenFormat with id '{}' updated.", id);
         return this.screenFormatRepository.save(found);
     }
@@ -58,9 +56,5 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
         }
         logger.info("ScreenFormat with id '{}' deleted.", screenFormatId);
         this.screenFormatRepository.deleteById(screenFormatId);
-    }
-
-    private Set<Room> fetchRooms(Set<String> roomIds) {
-        return this.roomService.findAllById(roomIds);
     }
 }
