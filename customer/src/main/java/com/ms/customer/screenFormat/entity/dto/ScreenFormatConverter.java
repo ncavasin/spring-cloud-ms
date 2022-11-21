@@ -2,7 +2,7 @@ package com.ms.customer.screenFormat.entity.dto;
 
 import com.ms.customer.screenFormat.entity.ScreenFormat;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ScreenFormatConverter {
@@ -14,10 +14,10 @@ public class ScreenFormatConverter {
                 .build();
     }
 
-    public static List<ScreenFormatDto> convert(List<ScreenFormat> screenFormats) {
+    public static Set<ScreenFormatDto> convert(Set<ScreenFormat> screenFormats) {
         return screenFormats.stream()
                 .map(ScreenFormatConverter::convert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public static ScreenFormat convert(ScreenFormatDto screenFormatDto) {
