@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,6 +38,11 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
                     logger.warn("Show with id {} not found", id);
                     throw new NotFound(String.format("Show with id %s not found.", id));
                 });
+    }
+
+    @Override
+    public Set<Show> findByDateAndBeginTimeAndEndTime(Date date, Time beginTime, Time endTime) {
+        return new HashSet<>(this.showRepository.findByDateAndBeginTimeAndEndTime(date, beginTime, endTime));
     }
 
     @Override

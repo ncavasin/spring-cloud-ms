@@ -4,6 +4,7 @@ import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Set;
 
 public interface ShowService {
@@ -13,6 +14,8 @@ public interface ShowService {
     Set<Show> findByDate(Date date);
 
     Show findById(String id);
+
+    Set<Show> findByDateAndBeginTimeAndEndTime(Date date, Time beginTime, Time endTime);
 
     Show add(ShowDto showDto);
 
