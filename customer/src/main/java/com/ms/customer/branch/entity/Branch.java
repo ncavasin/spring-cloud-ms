@@ -20,7 +20,7 @@ public class Branch extends TimeTrackable {
     protected String zipCode;
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    protected Set<Room> rooms = new java.util.LinkedHashSet<>();
+    protected Set<Room> rooms;
 
     @Override
     public boolean equals(Object o) {
