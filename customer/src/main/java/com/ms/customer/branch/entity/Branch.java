@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -23,4 +24,16 @@ public class Branch extends TimeTrackable {
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Room> rooms = new java.util.LinkedHashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Branch branch)) return false;
+        return getName().equals(branch.getName()) && Objects.equals(getZipCode(), branch.getZipCode()) && getRooms().equals(branch.getRooms());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getZipCode(), getRooms());
+    }
 }
