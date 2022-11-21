@@ -29,12 +29,12 @@ public record TopicController(TopicService topicService) {
 
     @PostMapping()
     public TopicDto add(@Validated @RequestBody TopicDto topicDto) {
-        return TopicConverter.convert(this.topicService.add(TopicConverter.convert(topicDto)));
+        return TopicConverter.convert(this.topicService.add(topicDto));
     }
 
     @PatchMapping("/{topicId}")
     public TopicDto update(@PathVariable("topicId") String topicId, @Validated @RequestBody TopicDto topicDto) {
-        return TopicConverter.convert(this.topicService.update(topicId, TopicConverter.convert(topicDto)));
+        return TopicConverter.convert(this.topicService.update(topicId, topicDto));
     }
 
     @DeleteMapping("/{topicId}")
