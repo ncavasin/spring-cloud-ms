@@ -9,6 +9,8 @@ public interface RoomService {
 
     Set<Room> findAll();
 
+    Set<Room> findAllById(Set<String> ids);
+
     Room findById(String id);
 
     Room add(RoomDto roomDto);
