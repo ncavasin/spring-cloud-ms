@@ -19,6 +19,7 @@ import java.util.Set;
 public class Movie extends TimeTrackable {
     @Column(nullable = false, unique = true)
     protected String title;
+    @Column(nullable = false)
     protected Double rating;
     protected String synopsis;
     @Column(nullable = false)
