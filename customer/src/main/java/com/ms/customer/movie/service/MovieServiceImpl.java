@@ -24,6 +24,11 @@ public record MovieServiceImpl(MovieRepository movieRepository, Logger logger,
         return new HashSet<>(this.movieRepository.findAll());
     }
 
+    @Override
+    public Set<Movie> findAllById(Set<String> movieIds) {
+        return new HashSet<>(this.movieRepository.findAllById(movieIds));
+    }
+
     public Movie findById(String id) {
         return this.movieRepository.findById(id)
                 .orElseThrow(() -> {

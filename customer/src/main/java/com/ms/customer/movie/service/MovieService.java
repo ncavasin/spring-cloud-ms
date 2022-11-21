@@ -9,6 +9,8 @@ public interface MovieService {
 
     Set<Movie> findAll();
 
+    Set<Movie> findAllById(Set<String> movieIds);
+
     Movie findById(String id);
 
     Movie add(MovieDto movieDto);
