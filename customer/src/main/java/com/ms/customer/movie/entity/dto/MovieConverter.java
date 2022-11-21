@@ -9,6 +9,14 @@ import java.util.stream.Collectors;
 public class MovieConverter {
 
     public static MovieDto convert(Movie movie) {
+        Set<String> topics = movie.getTopics() == null ? null : movie.getTopics()
+                .stream()
+                .map(AbstractEntity::getId)
+                .collect(Collectors.toSet());
+        Set<String> shows = movie.getShows() == null ? null : movie.getShows()
+                .stream()
+                .map(AbstractEntity::getId)
+                .collect(Collectors.toSet());
         return MovieDto.builder()
                 .id(movie.getId())
                 .title(movie.getTitle())
@@ -16,10 +24,8 @@ public class MovieConverter {
                 .duration(movie.getDuration())
                 .classification(movie.getClassification())
                 .rating(movie.getRating())
-                .topicIds(movie.getTopics()
-                        .stream()
-                        .map(AbstractEntity::getId)
-                        .collect(Collectors.toSet()))
+                .topicIds(topics)
+                .showIds(shows)
                 .build();
     }
 
