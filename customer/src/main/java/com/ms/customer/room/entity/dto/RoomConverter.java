@@ -12,6 +12,7 @@ public class RoomConverter {
                 .id(room.getId())
                 .name(room.getName())
                 .branchId(room.getId())
+                .screenFormatId(room.getId())
                 .build();
     }
 

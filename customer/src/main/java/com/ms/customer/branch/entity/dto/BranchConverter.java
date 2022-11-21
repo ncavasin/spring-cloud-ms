@@ -9,14 +9,15 @@ import java.util.stream.Collectors;
 public class BranchConverter {
 
     public static BranchDto convert(Branch branch) {
+        Set<String> rooms = branch.getRooms() == null ? null : branch.getRooms()
+                .stream()
+                .map(AbstractEntity::getId)
+                .collect(Collectors.toSet());
         return BranchDto.builder()
                 .id(branch.getId())
                 .name(branch.getName())
                 .zipCode(branch.getZipCode())
-                .roomIds(branch.getRooms()
-                        .stream()
-                        .map(AbstractEntity::getId)
-                        .collect(Collectors.toSet()))
+                .roomIds(rooms)
                 .build();
     }
 
