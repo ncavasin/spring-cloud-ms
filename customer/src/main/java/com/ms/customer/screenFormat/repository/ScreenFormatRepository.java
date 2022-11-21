@@ -1,5 +1,6 @@
-package com.ms.customer.screenFormat;
+package com.ms.customer.screenFormat.repository;
 
+import com.ms.customer.screenFormat.entity.ScreenFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
