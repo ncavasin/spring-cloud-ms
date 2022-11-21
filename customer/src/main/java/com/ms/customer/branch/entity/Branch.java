@@ -4,10 +4,7 @@ import com.ms.customer.room.entity.Room;
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +19,7 @@ public class Branch extends TimeTrackable {
     protected String name;
     protected String zipCode;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     protected Set<Room> rooms = new java.util.LinkedHashSet<>();
 
     @Override
