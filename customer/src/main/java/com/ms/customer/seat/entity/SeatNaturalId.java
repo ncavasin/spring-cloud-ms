@@ -1,4 +1,4 @@
-package com.ms.customer.seat;
+package com.ms.customer.seat.entity;
 
 import lombok.*;
 
@@ -15,20 +15,23 @@ import java.util.Objects;
 @Embeddable
 public class SeatNaturalId implements Serializable {
     @Column(nullable = false)
-    protected String row;
+    protected String seatRow;
 
     @Column(nullable = false)
-    protected Integer column;
+    protected Integer seatColumn;
+
+    @Column
+    protected boolean reserved;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SeatNaturalId that)) return false;
-        return row.equals(that.row) && column.equals(that.column);
+        return seatRow.equals(that.seatRow) && seatColumn.equals(that.seatColumn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(seatRow, seatColumn);
     }
 }
