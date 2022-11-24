@@ -20,9 +20,6 @@ public class SeatNaturalId implements Serializable {
     @Column(nullable = false)
     protected Integer seatColumn;
 
-    @Column
-    protected boolean reserved;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS seat
     seat_row           VARCHAR(255) NOT NULL,
     seat_column        INTEGER      NOT NULL,
     reserved           BOOLEAN      NOT NULL,
-    CONSTRAINT pk_seat PRIMARY KEY (id, seat_row, seat_column)
+    CONSTRAINT pk_seat PRIMARY KEY (id),
+    CONSTRAINT unique_seat_natural_id UNIQUE (seat_row, seat_column)
 );
 
