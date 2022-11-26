@@ -47,14 +47,45 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
 
     @Override
     public Seat add(SeatDto seatDto) {
-        return this.seatRepository.save(Seat.builder().seatNaturalId(seatDto.seatNaturalId()).build());
+        final Room room = this.roomService.findById(seatDto.roomId());
+        checkNaturalIdIsNotTaken(seatDto);
+        log.info("Seat {}{} created.", seatDto.seatNaturalId().getSeatRow(), seatDto.seatNaturalId().getSeatColumn());
+        return this.seatRepository.save(Seat.builder()
+                .seatNaturalId(seatDto.seatNaturalId())
+                .selection(null)
+                .selectionExpiration(null)
+                .confirmation(null)
+                .room(room)
+                .build());
     }
 
     @Override
-    public Seat update(String id, SeatDto seatDto) {
-        Seat found = this.findById(id);
+    public List<Seat> select(Set<SeatDto> seatDtos) {
+        List<Seat> seats = this.seatRepository.findAllById(seatDtos
+                .stream()
+                .map(SeatDto::id)
+                .collect(Collectors.toSet()));
+        seats.forEach(s -> {
+            s.setSelection(Timestamp.from(Instant.now()));
+            s.setSelectionExpiration(Timestamp.from(Instant.now().plusSeconds(TimeUnit.MINUTES.toSeconds(5))));
+        });
+        this.seatRepository.saveAll(seats);
 
-        return this.seatRepository.save(found);
+        logger.info("Seats {} selected.", seatDtos);
+        return this.findNotSelected();
+    }
+
+    @Override
+    public List<Seat> confirm(Set<SeatDto> seatDtos) {
+        List<Seat> seats = this.seatRepository.findAllById(seatDtos
+                .stream()
+                .map(SeatDto::id)
+                .collect(Collectors.toSet()));
+        seats.forEach(s -> s.setConfirmation(Timestamp.from(Instant.now())));
+        this.seatRepository.saveAll(seats);
+
+        logger.info("Seats {} confirmed.", seatDtos);
+        return this.seatRepository.findConfirmed();
     }
 
     @Override
@@ -64,5 +95,15 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
             throw new BadRequest(String.format("Seat with id %s does not exist", id));
         }
         this.seatRepository.deleteById(id);
+        logger.info("Seat with id {} deleted.", id);
+    }
+
+    private void checkNaturalIdIsNotTaken(SeatDto seatDto) {
+        if (this.seatRepository.existsBySeatNaturalId(seatDto.seatNaturalId())) {
+            logger.warn("Could not create Seat {}{}. It already exists.", seatDto.seatNaturalId().getSeatRow(),
+                    seatDto.seatNaturalId().getSeatColumn());
+            throw new BadRequest(String.format("Seat %s%s already exists.", seatDto.seatNaturalId().getSeatRow(),
+                    seatDto.seatNaturalId().getSeatColumn()));
+        }
     }
 }
