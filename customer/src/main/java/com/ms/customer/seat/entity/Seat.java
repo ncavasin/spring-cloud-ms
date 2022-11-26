@@ -22,11 +22,11 @@ public class Seat extends TimeTrackable implements Serializable {
     protected SeatNaturalId seatNaturalId;
 
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
     protected Timestamp selection;
 
+    protected Timestamp selectionExpiration;
+
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
     protected Timestamp confirmation;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
