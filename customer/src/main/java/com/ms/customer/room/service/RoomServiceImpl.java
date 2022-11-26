@@ -44,6 +44,7 @@ public record RoomServiceImpl(RoomRepository roomRepository, Logger logger,
                 .name(roomDto.name())
                 .screenFormat(fetchScreenFormat(roomDto.screenFormatId()))
                 .branch(fetchBranch(roomDto.branchId()))
+                .seats(new HashSet<>())
                 .build());
     }
 
