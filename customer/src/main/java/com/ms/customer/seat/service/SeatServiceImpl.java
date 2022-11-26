@@ -16,18 +16,18 @@ import java.util.Set;
 @Service
 public record SeatServiceImpl(Logger logger, SeatRepository seatRepository) implements SeatService {
     @Override
-    public Set<Seat> findAll() {
-        return new HashSet<>(this.seatRepository.findAll());
+    public List<Seat> findAll() {
+        return this.seatRepository.findAll();
     }
 
     @Override
-    public Set<Seat> findAvailable() {
-        return new HashSet<>(this.seatRepository.findAvailable());
+    public List<Seat> findNotSelected() {
+        return this.seatRepository.findNotSelected(Timestamp.from(Instant.now()), 5);
     }
 
     @Override
     public Set<Seat> findReserved() {
-        return new HashSet<>(this.seatRepository.findReserved());
+        return new HashSet<>(this.seatRepository.findConfirmed(Timestamp.from(Instant.now()), 5));
     }
 
     @Override
