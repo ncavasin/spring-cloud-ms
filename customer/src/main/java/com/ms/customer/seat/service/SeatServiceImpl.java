@@ -1,5 +1,7 @@
 package com.ms.customer.seat.service;
 
+import com.ms.customer.room.entity.Room;
+import com.ms.customer.room.service.RoomService;
 import com.ms.customer.seat.entity.Seat;
 import com.ms.customer.seat.entity.dto.SeatDto;
 import com.ms.customer.seat.repository.SeatRepository;
@@ -9,12 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public record SeatServiceImpl(Logger logger, SeatRepository seatRepository) implements SeatService {
+public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
+                              RoomService roomService) implements SeatService {
     @Override
     public List<Seat> findAll() {
         return this.seatRepository.findAll();
@@ -22,12 +29,12 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository) impl
 
     @Override
     public List<Seat> findNotSelected() {
-        return this.seatRepository.findNotSelected(Timestamp.from(Instant.now()), 5);
+        return this.seatRepository.findNotSelected();
     }
 
     @Override
-    public Set<Seat> findReserved() {
-        return new HashSet<>(this.seatRepository.findConfirmed(Timestamp.from(Instant.now()), 5));
+    public List<Seat> findReserved() {
+        return this.seatRepository.findConfirmed();
     }
 
     @Override
