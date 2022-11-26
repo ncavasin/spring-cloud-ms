@@ -24,7 +24,7 @@ public record SeatController(SeatService seatService) {
     }
 
     @GetMapping("/reserved")
-    public Set<SeatDto> findReserved() {
+    public List<SeatDto> findReserved() {
         return SeatConverter.convert(this.seatService().findReserved());
     }
 
