@@ -6,6 +6,7 @@ import com.ms.customer.seat.service.SeatService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -13,13 +14,13 @@ import java.util.Set;
 public record SeatController(SeatService seatService) {
 
     @GetMapping("/all")
-    public Set<SeatDto> findAll() {
+    public List<SeatDto> findAll() {
         return SeatConverter.convert(this.seatService.findAll());
     }
 
     @GetMapping("/available")
-    public Set<SeatDto> findAvailable() {
-        return SeatConverter.convert(this.seatService().findAvailable());
+    public List<SeatDto> findAvailable() {
+        return SeatConverter.convert(this.seatService().findNotSelected());
     }
 
     @GetMapping("/reserved")
@@ -37,9 +38,14 @@ public record SeatController(SeatService seatService) {
         return SeatConverter.convert(this.seatService.add(seatDto));
     }
 
-    @PatchMapping("/{seatId}")
-    public SeatDto update(@PathVariable("seatId") String id, @Validated @RequestBody SeatDto seatDto) {
-        return SeatConverter.convert(this.seatService.update(id, seatDto));
+    @PatchMapping("/select")
+    public List<SeatDto> select(@Validated @RequestBody Set<SeatDto> seatDtos) {
+        return SeatConverter.convert(this.seatService.select(seatDtos));
+    }
+
+    @PatchMapping("/confirm")
+    public List<SeatDto> confirm(@Validated @RequestBody Set<SeatDto> seatDtos) {
+        return SeatConverter.convert(this.seatService.confirm(seatDtos));
     }
 
     @DeleteMapping("/{seatId}")
