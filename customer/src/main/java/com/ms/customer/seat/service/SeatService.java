@@ -9,11 +9,13 @@ import java.util.List;
 public interface SeatService {
     List<Seat> findAll();
 
-    Seat findByNaturalId(String row, Integer column);
+    List<Seat> findAllById(List<String> ids);
+
+    Seat findByNaturalId(SeatNaturalIdDto seatNaturalIdDto);
 
     Seat findById(String id);
 
-    List<Seat> findAllByNaturalId(List<SeatNaturalIdDto> seatNaturalIdDtos);
+    List<Seat> findAllByNaturalId(List<SeatNaturalIdDto> seatNaturalIdDtoList);
 
     Seat add(SeatDto seatDto);
 

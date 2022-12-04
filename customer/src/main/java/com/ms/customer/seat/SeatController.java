@@ -28,6 +28,11 @@ public record SeatController(SeatService seatService) {
         return SeatConverter.convert(this.seatService.findById(id));
     }
 
+    @PostMapping("/by-natural-id")
+    public SeatDto findByNaturalId(@Validated @RequestBody SeatNaturalIdDto naturalIdDto) {
+        return SeatConverter.convert(this.seatService.findByNaturalId(naturalIdDto));
+    }
+
     @PostMapping
     public SeatDto add(@Validated @RequestBody SeatDto seatDto) {
         return SeatConverter.convert(this.seatService.add(seatDto));
