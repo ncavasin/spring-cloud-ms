@@ -2,24 +2,20 @@ package com.ms.customer.seat.service;
 
 import com.ms.customer.seat.entity.Seat;
 import com.ms.customer.seat.entity.dto.SeatDto;
+import com.ms.customer.seat.entity.dto.SeatNaturalIdDto;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SeatService {
     List<Seat> findAll();
 
-    List<Seat> findNotSelected();
-
-    List<Seat> findReserved();
+    Seat findByNaturalId(String row, Integer column);
 
     Seat findById(String id);
 
+    List<Seat> findAllByNaturalId(List<SeatNaturalIdDto> seatNaturalIdDtos);
+
     Seat add(SeatDto seatDto);
-
-    List<Seat> select(Set<SeatDto> seatDtos);
-
-    List<Seat> confirm(Set<SeatDto> seatDtos);
 
     void delete(String id);
 }

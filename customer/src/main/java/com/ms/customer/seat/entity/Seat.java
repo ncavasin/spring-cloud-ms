@@ -7,7 +7,6 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -20,14 +19,6 @@ public class Seat extends TimeTrackable implements Serializable {
     @NaturalId
     @Column(unique = true, nullable = false)
     protected SeatNaturalId seatNaturalId;
-
-    @Column
-    protected Timestamp selection;
-
-    protected Timestamp selectionExpiration;
-
-    @Column
-    protected Timestamp confirmation;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     protected Room room;

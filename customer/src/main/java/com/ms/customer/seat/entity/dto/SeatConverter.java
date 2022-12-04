@@ -12,8 +12,6 @@ public class SeatConverter {
         return SeatDto.builder()
                 .id(seat.getId())
                 .seatNaturalId(seat.getSeatNaturalId())
-                .selection(seat.getSelection())
-                .confirmation(seat.getConfirmation())
                 .roomId(seat.getRoom().getId())
                 .build();
     }
