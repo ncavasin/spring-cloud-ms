@@ -1,10 +1,11 @@
-package com.ms.customer.customer;
+package com.ms.customer.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ms.customer.shared.entities.TimeTrackable;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Objects;
 
 @Getter
@@ -19,13 +20,6 @@ public class Customer extends TimeTrackable {
 
     @JsonIgnore
     protected String password;
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
-//    @JoinTable(name = "customer_ticket",
-//            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "ticket_id", referencedColumnName = "id"))
-//    @Fetch(FetchMode.JOIN)
-//    protected Set<Ticket> tickets = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

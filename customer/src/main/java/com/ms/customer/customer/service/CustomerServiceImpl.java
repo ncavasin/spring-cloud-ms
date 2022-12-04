@@ -1,5 +1,8 @@
-package com.ms.customer.customer;
+package com.ms.customer.customer.service;
 
+import com.ms.customer.customer.entity.Customer;
+import com.ms.customer.customer.entity.dto.CustomerDto;
+import com.ms.customer.customer.repository.CustomerRepository;
 import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +13,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public record CustomerService(CustomerRepository customerRepository, Logger logger) {
-    public List<Customer> getAll() {
+public record CustomerServiceImpl(CustomerRepository customerRepository, Logger logger) implements CustomerService {
+    public List<Customer> findAll() {
         return this.customerRepository.findAll();
     }
 
-    public Customer getById(String customerId) {
+    public Customer findById(String customerId) {
         return this.customerRepository.findById(customerId)
                 .orElseThrow(() -> {
                     logger.warn("Customer with id '{}' not found", customerId);
@@ -23,19 +26,24 @@ public record CustomerService(CustomerRepository customerRepository, Logger logg
                 });
     }
 
-    public Customer add(Customer customer) {
-        emailIsTaken(customer.getEmail());
-        log.info("Customer with email '{}' created.", customer.getEmail());
+    public Customer add(CustomerDto customerDto) {
+        emailIsTaken(customerDto.email());
         // TODO: validate email format
-        return customerRepository.save(customer);
+        log.info("Customer with email '{}' created.", customerDto.email());
+        return customerRepository.save(Customer.builder()
+                .email(customerDto.email())
+                .password(customerDto.password())
+                .build());
     }
 
-    public Customer update(String customerId, Customer customer) {
-        validateCustomerExists(customerId);
-        emailIsTaken(customer.getEmail());
-        customer.setId(customerId);
-        log.info("Customer with id '{}' updated.", customerId);
+    public Customer update(String id, CustomerDto customerDto) {
+        validateCustomerExists(id);
+        emailIsTaken(customerDto.email());
+        Customer customer = this.findById(id);
         // TODO: hash password
+        customer.setEmail(customerDto.email());
+        customer.setPassword(customer.getPassword());
+        log.info("Customer with id '{}' updated.", id);
         return this.customerRepository.save(customer);
     }
 
