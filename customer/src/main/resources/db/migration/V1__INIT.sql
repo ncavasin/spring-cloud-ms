@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS movie
     title              VARCHAR(255)           NOT NULL,
     rating             DOUBLE PRECISION       NOT NULL,
     synopsis           VARCHAR(255),
-    duration           TIME WITHOUT TIME ZONE NOT NULL,
+    duration           BIGINT,
     classification     VARCHAR(255),
     CONSTRAINT pk_movie PRIMARY KEY (id),
     CONSTRAINT unique_movie_title UNIQUE (title)
