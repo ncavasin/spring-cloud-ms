@@ -6,7 +6,7 @@ import com.ms.customer.topic.entity.Topic;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public class Movie extends TimeTrackable {
     protected Double rating;
     protected String synopsis;
     @Column(nullable = false)
-    protected Time duration;
+    protected Duration duration;
     protected String classification;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "movie")
