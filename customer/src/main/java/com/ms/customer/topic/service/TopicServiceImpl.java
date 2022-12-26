@@ -37,7 +37,7 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
         validateNameIsNotTaken(topicDto.name());
         logger.info("Topic with name '{}' and movie ids '{}' created.", topicDto.name(), topicDto.movieIds());
         return this.topicRepository.save(Topic.builder()
-                .name(topicDto.name())
+                .name(topicDto.name().toUpperCase())
                 .movies(new HashSet<>())
                 .build());
     }
@@ -46,7 +46,7 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
         existsById(id);
         validateNameIsNotTaken(topicDto.name());
         Topic found = this.findById(id);
-        found.setName(topicDto.name());
+        found.setName(topicDto.name().toUpperCase());
         found.setMovies(new HashSet<>());
         logger.info("Topic with id '{}' updated.", topicDto.id());
         return this.topicRepository.save(found);
