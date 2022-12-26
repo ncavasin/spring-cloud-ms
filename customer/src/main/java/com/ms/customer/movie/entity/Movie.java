@@ -29,7 +29,7 @@ public class Movie extends TimeTrackable {
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "movie")
     protected Set<Show> shows;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "movie_topic",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
