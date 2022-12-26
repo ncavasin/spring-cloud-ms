@@ -19,7 +19,6 @@ import java.util.Set;
 public class Reservation extends TimeTrackable {
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
     @JoinColumn(name = "customer_id")
     protected Customer customer;
 
