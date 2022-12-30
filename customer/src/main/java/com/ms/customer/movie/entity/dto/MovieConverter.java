@@ -21,7 +21,7 @@ public class MovieConverter {
                 .id(movie.getId())
                 .title(movie.getTitle())
                 .synopsis(movie.getSynopsis())
-                .duration(movie.getDuration())
+                .duration(movie.getDurationInMinutes())
                 .classification(movie.getClassification())
                 .rating(movie.getRating())
                 .topicIds(topics)
