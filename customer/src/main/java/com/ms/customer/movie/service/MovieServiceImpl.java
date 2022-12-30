@@ -42,7 +42,7 @@ public record MovieServiceImpl(MovieRepository movieRepository, Logger logger,
                 .title(movieDto.title())
                 .synopsis(movieDto.synopsis())
                 .rating(movieDto.rating())
-                .duration(movieDto.duration())
+                .durationInMinutes(movieDto.duration())
                 .classification(movieDto.classification())
                 .topics(fetchTopics(movieDto.topicIds()))
                 .build());
@@ -54,7 +54,7 @@ public record MovieServiceImpl(MovieRepository movieRepository, Logger logger,
         found.setTitle(movieDto.title());
         found.setRating(movieDto.rating());
         found.setSynopsis(movieDto.synopsis());
-        found.setDuration(movieDto.duration());
+        found.setDurationInMinutes(movieDto.duration());
         found.setClassification(movieDto.classification());
         found.setTopics(fetchTopics(movieDto.topicIds()));
         logger.info("Movie with id '{}' updated.", id);
