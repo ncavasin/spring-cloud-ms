@@ -23,7 +23,7 @@ public class Movie extends TimeTrackable {
     protected Double rating;
     protected String synopsis;
     @Column(nullable = false)
-    protected Duration duration;
+    protected Duration durationInMinutes;
     protected String classification;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "movie")
@@ -40,11 +40,11 @@ public class Movie extends TimeTrackable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return title.equals(movie.title) && rating.equals(movie.rating) && Objects.equals(synopsis, movie.synopsis) && duration.equals(movie.duration) && Objects.equals(classification, movie.classification) && Objects.equals(shows, movie.shows) && Objects.equals(topics, movie.topics);
+        return title.equals(movie.title) && rating.equals(movie.rating) && Objects.equals(synopsis, movie.synopsis) && durationInMinutes.equals(movie.durationInMinutes) && Objects.equals(classification, movie.classification) && Objects.equals(shows, movie.shows) && Objects.equals(topics, movie.topics);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, rating, synopsis, duration, classification);
+        return Objects.hash(title, rating, synopsis, durationInMinutes, classification);
     }
 }
