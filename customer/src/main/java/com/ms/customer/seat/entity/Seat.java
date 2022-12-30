@@ -7,6 +7,7 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -22,4 +23,17 @@ public class Seat extends TimeTrackable implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     protected Room room;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return seatNaturalId.equals(seat.seatNaturalId) && room.equals(seat.room);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seatNaturalId, room);
+    }
 }

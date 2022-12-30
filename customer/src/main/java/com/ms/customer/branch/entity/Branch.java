@@ -25,12 +25,13 @@ public class Branch extends TimeTrackable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Branch branch)) return false;
-        return getName().equals(branch.getName()) && Objects.equals(getZipCode(), branch.getZipCode()) && getRooms().equals(branch.getRooms());
+        if (o == null || getClass() != o.getClass()) return false;
+        Branch branch = (Branch) o;
+        return name.equals(branch.name) && Objects.equals(zipCode, branch.zipCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getZipCode());
+        return Objects.hash(name, zipCode);
     }
 }

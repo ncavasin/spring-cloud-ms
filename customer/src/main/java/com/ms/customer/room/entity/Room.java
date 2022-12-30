@@ -33,12 +33,13 @@ public class Room extends TimeTrackable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Room room)) return false;
-        return getName().equals(room.getName()) && getBranch().equals(room.getBranch()) && getScreenFormat().equals(room.getScreenFormat());
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return name.equals(room.name) && branch.equals(room.branch) && screenFormat.equals(room.screenFormat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getBranch(), getScreenFormat());
+        return Objects.hash(name, branch, screenFormat);
     }
 }

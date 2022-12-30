@@ -38,12 +38,13 @@ public class Movie extends TimeTrackable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Movie movie)) return false;
-        return getTitle().equals(movie.getTitle()) && Objects.equals(getRating(), movie.getRating()) && Objects.equals(getSynopsis(), movie.getSynopsis()) && getDuration().equals(movie.getDuration()) && Objects.equals(getClassification(), movie.getClassification());
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return title.equals(movie.title) && rating.equals(movie.rating) && Objects.equals(synopsis, movie.synopsis) && duration.equals(movie.duration) && Objects.equals(classification, movie.classification) && Objects.equals(shows, movie.shows) && Objects.equals(topics, movie.topics);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getRating(), getSynopsis(), getDuration(), getClassification());
+        return Objects.hash(title, rating, synopsis, duration, classification);
     }
 }

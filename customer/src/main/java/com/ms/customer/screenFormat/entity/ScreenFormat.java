@@ -30,12 +30,13 @@ public class ScreenFormat extends TimeTrackable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ScreenFormat that)) return false;
-        return getName().equals(that.getName()) && getScreenHeight().equals(that.getScreenHeight()) && getScreenWidth().equals(that.getScreenWidth()) && getRooms().equals(that.getRooms());
+        if (o == null || getClass() != o.getClass()) return false;
+        ScreenFormat that = (ScreenFormat) o;
+        return name.equals(that.name) && screenHeight.equals(that.screenHeight) && screenWidth.equals(that.screenWidth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getScreenHeight(), getScreenWidth(), getRooms());
+        return Objects.hash(name, screenHeight, screenWidth);
     }
 }
