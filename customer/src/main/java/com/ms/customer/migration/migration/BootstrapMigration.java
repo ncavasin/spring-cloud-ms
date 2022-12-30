@@ -26,10 +26,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.Set;
 
 
@@ -328,16 +325,24 @@ public record BootstrapMigration(Logger logger,
                     .getId();
 
             this.showService.add(ShowDto.builder()
-                    .beginTime(Timestamp.from(Instant.now()))
-                    .endTime(Timestamp.from(Instant.now().plusSeconds(60 * 60 * 290)))
-                    .date(Date.valueOf(LocalDate.of(2022, 1, 14)))
+                    .beginTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
+                            LocalTime.of(16, 12, 0),
+                            ZoneId.systemDefault()))
+                    .endTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
+                            LocalTime.of(16, 12, 0).plusMinutes(300L),
+                            ZoneId.systemDefault()))
+                    .date(Date.valueOf(LocalDate.of(2022, 12, 30)))
                     .movieId(lotr1)
                     .roomId(room001)
                     .build());
             this.showService.add(ShowDto.builder()
-                    .beginTime(Timestamp.from(Instant.now()))
-                    .endTime(Timestamp.from(Instant.now().plusSeconds(60 * 60 * 100)))
-                    .date(Date.valueOf(LocalDate.of(2022, 1, 14)))
+                    .beginTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
+                            LocalTime.of(20, 30, 0),
+                            ZoneId.systemDefault()))
+                    .endTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
+                            LocalTime.of(20, 30, 0).plusMinutes(300L),
+                            ZoneId.systemDefault()))
+                    .date(Date.valueOf(LocalDate.of(2022, 12, 30)))
                     .movieId(lotr2)
                     .roomId(room002)
                     .build());

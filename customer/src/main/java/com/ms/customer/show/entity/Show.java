@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @Getter
@@ -24,10 +24,10 @@ public class Show extends TimeTrackable {
     protected Date date;
 
     @Column(nullable = false)
-    protected Timestamp beginTime;
+    protected ZonedDateTime beginTime;
 
     @Column(nullable = false)
-    protected Timestamp endTime;
+    protected ZonedDateTime endTime;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     protected Movie movie;
