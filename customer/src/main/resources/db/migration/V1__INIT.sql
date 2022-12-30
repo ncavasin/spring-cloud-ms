@@ -39,14 +39,14 @@ CREATE TABLE IF NOT EXISTS topic
 
 CREATE TABLE IF NOT EXISTS movie
 (
-    id                 VARCHAR(255)           NOT NULL,
-    creation_timestamp TIMESTAMP WITHOUT TIME ZONE,
-    update_timestamp   TIMESTAMP WITHOUT TIME ZONE,
-    title              VARCHAR(255)           NOT NULL,
-    rating             DOUBLE PRECISION       NOT NULL,
-    synopsis           VARCHAR(255),
-    duration           BIGINT,
-    classification     VARCHAR(255),
+    id                  VARCHAR(255)     NOT NULL,
+    creation_timestamp  TIMESTAMP WITHOUT TIME ZONE,
+    update_timestamp    TIMESTAMP WITHOUT TIME ZONE,
+    title               VARCHAR(255)     NOT NULL,
+    rating              DOUBLE PRECISION NOT NULL,
+    synopsis            VARCHAR(255),
+    duration_in_minutes BIGINT,
+    classification      VARCHAR(255),
     CONSTRAINT pk_movie PRIMARY KEY (id),
     CONSTRAINT unique_movie_title UNIQUE (title)
 );
@@ -88,14 +88,14 @@ CREATE TABLE IF NOT EXISTS room
 
 CREATE TABLE IF NOT EXISTS show
 (
-    id                 VARCHAR(255)           NOT NULL,
+    id                 VARCHAR(255)             NOT NULL,
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE,
     update_timestamp   TIMESTAMP WITHOUT TIME ZONE,
-    date               date                   NOT NULL,
-    begin_time         TIME WITHOUT TIME ZONE NOT NULL,
-    end_time           TIME WITHOUT TIME ZONE NOT NULL,
-    movie_id           VARCHAR(255)           NOT NULL,
-    room_id            VARCHAR(255)           NOT NULL,
+    date               date                     NOT NULL,
+    begin_time         TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_time           TIMESTAMP WITH TIME ZONE NOT NULL,
+    movie_id           VARCHAR(255)             NOT NULL,
+    room_id            VARCHAR(255)             NOT NULL,
     CONSTRAINT pk_show PRIMARY KEY (id),
     CONSTRAINT fk_movie_movie_show FOREIGN KEY (movie_id) REFERENCES movie (id),
     CONSTRAINT fk_room_movie_room FOREIGN KEY (room_id) REFERENCES room (id)
