@@ -4,6 +4,7 @@ import com.ms.customer.movie.entity.Movie;
 import com.ms.customer.movie.service.MovieService;
 import com.ms.customer.room.entity.Room;
 import com.ms.customer.room.service.RoomService;
+import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import com.ms.customer.show.entity.Show;
 import com.ms.customer.show.entity.dto.ShowDto;
@@ -47,6 +48,7 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
 
     @Override
     public Show add(ShowDto showDto) {
+        checkShowExistence(showDto);
         final Movie movie = this.movieService.findById(showDto.movieId());
         final Room room = this.roomService.findById(showDto.roomId());
         logger.info("Show for movie '{}' in room '{}' with date '{}' created.", movie.getTitle(), room.getName(), showDto.date());
@@ -61,6 +63,7 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
 
     @Override
     public Show update(String id, ShowDto showDto) {
+        checkShowExistence(showDto);
         Show found = this.findById(id);
         final Movie movie = this.movieService.findById(showDto.movieId());
         final Room room = this.roomService.findById(showDto.roomId());
@@ -80,5 +83,15 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
             throw new NotFound(String.format("Show with id %s does not exist", id));
         }
         this.showRepository.deleteById(id);
+    }
+
+    private void checkShowExistence(ShowDto showDto) {
+        if (this.showRepository.existsByRoomIdAndDateAndBeginTimeAndEndTime(showDto.roomId(), showDto.date(),
+                showDto.beginTime(), showDto.endTime())) {
+            log.warn("A show in room {} with date {} begin time {} and end time {} already exists!", showDto.roomId(),
+                    showDto.date(), showDto.beginTime(), showDto.endTime());
+            throw new BadRequest(String.format("A show in room %s with date %s begin time %s and end time %s " +
+                    "already exists", showDto.roomId(), showDto.date(), showDto.beginTime(), showDto.endTime()));
+        }
     }
 }
