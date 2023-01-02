@@ -328,7 +328,6 @@ public record BootstrapMigration(Logger logger,
                     .getId();
 
             final Date localDate = Date.from(Instant.now());
-            log.info("DATEEEEEEEEE HERE {}", localDate);
             final LocalTime localTime = LocalTime.of(16, 12, 0);
             this.showService.add(ShowDto.builder()
                     .date(localDate)
