@@ -3,6 +3,8 @@ services:
     container_name: ticketing-db
     image: postgres:latest
     environment:
+      TZ: 'UTC'
+      PGTZ: 'UTC'
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
