@@ -1,10 +1,10 @@
 package com.ms.customer.show.service;
 
-import com.ms.customer.show.entity.dto.ShowDto;
 import com.ms.customer.show.entity.Show;
+import com.ms.customer.show.entity.dto.ShowDto;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Set;
 
 public interface ShowService {
@@ -15,7 +15,7 @@ public interface ShowService {
 
     Show findById(String id);
 
-    Set<Show> findByDateAndBeginTimeAndEndTime(Date date, Time beginTime, Time endTime);
+    Set<Show> findByDateAndBeginTimeAndEndTime(Date date, LocalTime beginTime, LocalTime endTime);
 
     Show add(ShowDto showDto);
 

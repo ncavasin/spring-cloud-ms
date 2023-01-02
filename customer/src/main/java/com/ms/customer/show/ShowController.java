@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Set;
 
 @RestController
@@ -31,8 +32,8 @@ public record ShowController(ShowService showService) {
 
     @GetMapping("/date/{date}/from/{beginTime}/end/{endTime}")
     public Set<ShowDto> findByDateAndBeginTimeAndEndTime(@PathVariable("date") Date date,
-                                                         @PathVariable("beginTime") Time beginTime,
-                                                         @PathVariable("endTime") Time endTime) {
+                                                         @PathVariable("beginTime") LocalTime beginTime,
+                                                         @PathVariable("endTime") LocalTime endTime) {
         return ShowConverter.convert(this.showService.findByDateAndBeginTimeAndEndTime(date, beginTime, endTime));
     }
 

@@ -9,8 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
-import java.time.ZonedDateTime;
+import java.util.Date;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Getter
@@ -20,14 +20,15 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 public class Show extends TimeTrackable {
+
     @Column(nullable = false)
     protected Date date;
 
     @Column(nullable = false)
-    protected ZonedDateTime beginTime;
+    protected LocalTime beginTime;
 
     @Column(nullable = false)
-    protected ZonedDateTime endTime;
+    protected LocalTime endTime;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     protected Movie movie;
@@ -40,12 +41,12 @@ public class Show extends TimeTrackable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Show show = (Show) o;
-        return date.equals(show.date) && beginTime.equals(show.beginTime) && endTime.equals(show.endTime) && movie.equals(show.movie) && room.equals(show.room);
+        return beginTime.equals(show.beginTime) && endTime.equals(show.endTime) && movie.equals(show.movie) && room.equals(show.room);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, beginTime, endTime, movie, room);
+        return Objects.hash(beginTime, endTime, movie, room);
     }
 
 }

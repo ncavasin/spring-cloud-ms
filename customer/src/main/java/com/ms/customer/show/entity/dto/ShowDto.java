@@ -2,10 +2,10 @@ package com.ms.customer.show.entity.dto;
 
 import lombok.Builder;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.ZonedDateTime;
+import java.util.Date;
+import java.time.LocalTime;
+
 
 @Builder
-public record ShowDto(String id, Date date, ZonedDateTime beginTime, ZonedDateTime endTime, String movieId, String roomId) {
+public record ShowDto(String id, Date date, LocalTime beginTime, LocalTime endTime, String movieId, String roomId) {
 }

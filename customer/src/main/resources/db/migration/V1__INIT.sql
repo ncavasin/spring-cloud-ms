@@ -88,14 +88,14 @@ CREATE TABLE IF NOT EXISTS room
 
 CREATE TABLE IF NOT EXISTS show
 (
-    id                 VARCHAR(255)             NOT NULL,
+    id                 VARCHAR(255)           NOT NULL,
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE,
     update_timestamp   TIMESTAMP WITHOUT TIME ZONE,
-    date               DATE                     NOT NULL,
+    date               DATE                   NOT NULL,
     begin_time         TIME WITHOUT TIME ZONE NOT NULL,
     end_time           TIME WITHOUT TIME ZONE NOT NULL,
-    movie_id           VARCHAR(255)             NOT NULL,
-    room_id            VARCHAR(255)             NOT NULL,
+    movie_id           VARCHAR(255)           NOT NULL,
+    room_id            VARCHAR(255)           NOT NULL,
     CONSTRAINT pk_show PRIMARY KEY (id),
     CONSTRAINT fk_movie_movie_show FOREIGN KEY (movie_id) REFERENCES movie (id),
     CONSTRAINT fk_room_movie_room FOREIGN KEY (room_id) REFERENCES room (id)

@@ -25,8 +25,10 @@ import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
-import java.time.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -314,6 +316,7 @@ public record BootstrapMigration(Logger logger,
                             .synopsis("No synopsis by now")
                             .build())
                     .getId();
+
             final String lotr3 = this.movieService.add(MovieDto.builder()
                             .title("The lord of the Rings: The Return of the King")
                             .duration(Duration.ofMinutes(190))
@@ -324,28 +327,26 @@ public record BootstrapMigration(Logger logger,
                             .build())
                     .getId();
 
+            final Date localDate = Date.from(Instant.now());
+            log.info("DATEEEEEEEEE HERE {}", localDate);
+            final LocalTime localTime = LocalTime.of(16, 12, 0);
             this.showService.add(ShowDto.builder()
-                    .beginTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
-                            LocalTime.of(16, 12, 0),
-                            ZoneId.systemDefault()))
-                    .endTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
-                            LocalTime.of(16, 12, 0).plusMinutes(300L),
-                            ZoneId.systemDefault()))
-                    .date(Date.valueOf(LocalDate.of(2022, 12, 30)))
+                    .date(localDate)
+                    .beginTime(localTime)
+                    .endTime(localTime.plusMinutes(30L))
                     .movieId(lotr1)
                     .roomId(room001)
                     .build());
+
+            final LocalTime localTime2 = LocalTime.of(20, 30, 0);
             this.showService.add(ShowDto.builder()
-                    .beginTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
-                            LocalTime.of(20, 30, 0),
-                            ZoneId.systemDefault()))
-                    .endTime(ZonedDateTime.of(LocalDate.of(2022, 12, 30),
-                            LocalTime.of(20, 30, 0).plusMinutes(300L),
-                            ZoneId.systemDefault()))
-                    .date(Date.valueOf(LocalDate.of(2022, 12, 30)))
+                    .date(localDate)
+                    .beginTime(localTime2)
+                    .endTime(localTime.plusMinutes(210L))
                     .movieId(lotr2)
                     .roomId(room002)
                     .build());
+
         } catch (BadRequest badRequest) {
             log.warn("Bad request triggered. Message: '{}'", badRequest.getMessage());
         }

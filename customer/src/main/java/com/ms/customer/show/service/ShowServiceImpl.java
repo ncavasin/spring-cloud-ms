@@ -13,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
     }
 
     @Override
-    public Set<Show> findByDateAndBeginTimeAndEndTime(Date date, Time beginTime, Time endTime) {
+    public Set<Show> findByDateAndBeginTimeAndEndTime(Date date, LocalTime beginTime, LocalTime endTime) {
         return new HashSet<>(this.showRepository.findByDateAndBeginTimeAndEndTime(date, beginTime, endTime));
     }
 
@@ -51,7 +51,7 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
         checkShowExistence(showDto);
         final Movie movie = this.movieService.findById(showDto.movieId());
         final Room room = this.roomService.findById(showDto.roomId());
-        logger.info("Show for movie '{}' in room '{}' with date '{}' created.", movie.getTitle(), room.getName(), showDto.date());
+        logger.info("Show for movie '{}' in room '{}' with begin time '{}' created.", movie.getTitle(), room.getName(), showDto.beginTime());
         return this.showRepository.save(Show.builder()
                 .date(showDto.date())
                 .beginTime(showDto.beginTime())
@@ -88,10 +88,10 @@ public record ShowServiceImpl(Logger logger, ShowRepository showRepository, Movi
     private void checkShowExistence(ShowDto showDto) {
         if (this.showRepository.existsByRoomIdAndDateAndBeginTimeAndEndTime(showDto.roomId(), showDto.date(),
                 showDto.beginTime(), showDto.endTime())) {
-            log.warn("A show in room {} with date {} begin time {} and end time {} already exists!", showDto.roomId(),
-                    showDto.date(), showDto.beginTime(), showDto.endTime());
-            throw new BadRequest(String.format("A show in room %s with date %s begin time %s and end time %s " +
-                    "already exists", showDto.roomId(), showDto.date(), showDto.beginTime(), showDto.endTime()));
+            log.warn("A show in room {} with date {}, begin time '{}' and end time '{}' already exists!",
+                    showDto.roomId(), showDto.date(), showDto.beginTime(), showDto.endTime());
+            throw new BadRequest(String.format("A show in room %s with date '%s', begin time '%s' and end time '%s' " +
+                    "already exists!", showDto.roomId(), showDto.date(), showDto.beginTime(), showDto.endTime()));
         }
     }
 }
