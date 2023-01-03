@@ -43,6 +43,7 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
     public Customer update(String id, CustomerDto customerDto) {
         validateCustomerExists(id);
         emailIsTaken(customerDto.email());
+        checkPasswordLength(customerDto.password());
         Customer customer = this.findById(id);
         // TODO: hash password
         customer.setEmail(customerDto.email());
