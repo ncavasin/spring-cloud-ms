@@ -13,6 +13,34 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public abstract class TestContainerBase {
 //    private static final PostgreSQLContainer<?> database = new PostgreSQLContainer<>("postgres:14.2-alpine");
 
+//    import org.testcontainers.containers.PostgreSQLContainer;
+//import org.testcontainers.junit.jupiter.Container;
+//import org.testcontainers.junit.jupiter.Testcontainers;
+//
+//@Testcontainers
+//public abstract class AbstractPostgreSQLTest {
+//
+//    @Container
+//    private static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:11.5")
+//        .withDatabaseName("mydatabase")
+//        .withUsername("user")
+//        .withPassword("password");
+//
+//    protected PostgreSQLContainer getPostgreSQLContainer() {
+//        return postgres;
+//    }
+//}
+//
+//public class TestcontainerTest extends AbstractPostgreSQLTest {
+//
+//    @Test
+//    public void test() {
+//        // your test code goes here
+//        PostgreSQLContainer postgres = getPostgreSQLContainer();
+//        // use postgres in your test code
+//    }
+//}
+
     private static final PostgreSQLContainer POSTGRES_SQL_CONTAINER;
 
     static {
