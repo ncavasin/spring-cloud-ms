@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public record CustomerServiceImpl(CustomerRepository customerRepository, Logger logger) implements CustomerService {
 
-
     private static final int MIN_PWD_LENGTH = 8;
 
     public List<Customer> findAll() {
