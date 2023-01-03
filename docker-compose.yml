@@ -1,7 +1,7 @@
 services:
   db:
     container_name: ticketing-db
-    image: postgres:12.13-alpine
+    image: postgres:14.2-alpine
     environment:
       TZ: 'UTC'
       PGTZ: 'UTC'
