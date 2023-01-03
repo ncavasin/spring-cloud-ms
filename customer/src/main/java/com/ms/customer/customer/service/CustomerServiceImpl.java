@@ -14,6 +14,10 @@ import java.util.List;
 @Slf4j
 @Service
 public record CustomerServiceImpl(CustomerRepository customerRepository, Logger logger) implements CustomerService {
+
+
+    private static final int MIN_PWD_LENGTH = 8;
+
     public List<Customer> findAll() {
         return this.customerRepository.findAll();
     }
@@ -28,6 +32,7 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
 
     public Customer add(CustomerDto customerDto) {
         emailIsTaken(customerDto.email());
+        checkPasswordLength(customerDto.password());
         // TODO: validate email format
         log.info("Customer with email '{}' created.", customerDto.email());
         return customerRepository.save(Customer.builder()
@@ -64,6 +69,13 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
         if (!this.customerRepository.existsById(customerId)) {
             log.warn("Customer with id '{}' does not exist", customerId);
             throw new BadRequest(String.format("Customer with id %s does not exist", customerId));
+        }
+    }
+
+    private void checkPasswordLength(String password) {
+        if (password.length() < MIN_PWD_LENGTH) {
+            log.warn("Password minimum length ({}) not matched.", MIN_PWD_LENGTH);
+            throw new BadRequest(String.format("Password minimum length (%s) not matched", MIN_PWD_LENGTH));
         }
     }
 }
