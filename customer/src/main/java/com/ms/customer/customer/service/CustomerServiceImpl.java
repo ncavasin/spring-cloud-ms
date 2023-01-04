@@ -30,45 +30,50 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
     }
 
     public Customer add(CustomerDto customerDto) {
-        emailIsTaken(customerDto.email());
+        checkEmailIsTaken(customerDto.email());
         checkPasswordLength(customerDto.password());
         // TODO: validate email format
+        // TODO: implement HASH pwd
         log.info("Customer with email '{}' created.", customerDto.email());
         return customerRepository.save(Customer.builder()
                 .email(customerDto.email())
-                .password(customerDto.password())
+                .password(hashPassword(customerDto.password()))
                 .build());
     }
 
     public Customer update(String id, CustomerDto customerDto) {
-        validateCustomerExists(id);
-        emailIsTaken(customerDto.email());
-        checkPasswordLength(customerDto.password());
+        checkCustomerExists(id);
+
         Customer customer = this.findById(id);
-        // TODO: hash password
-        customer.setEmail(customerDto.email());
-        customer.setPassword(customer.getPassword());
+        if (customerDto.email() != null && !customerDto.email().isEmpty() && !customer.getEmail().equals(customerDto.email())) {
+            checkEmailIsTaken(customerDto.email());
+            customer.setEmail(customerDto.email());
+        }
+        if (customerDto.password() != null && !customerDto.password().isEmpty() && !customer.getPassword().equals(customerDto.password())) {
+            checkPasswordLength(customerDto.password());
+            customer.setPassword(hashPassword(customerDto.password()));
+        }
         log.info("Customer with id '{}' updated.", id);
         return this.customerRepository.save(customer);
     }
 
     public void delete(String customerId) {
-        validateCustomerExists(customerId);
+        checkCustomerExists(customerId);
         this.logger.info("Customer with id '{}' deleted.", customerId);
         this.customerRepository.deleteById(customerId);
     }
 
-    private void emailIsTaken(String email) {
+    private void checkEmailIsTaken(String email) {
         if (this.customerRepository.existsByEmail(email)) {
             log.warn("Email '{}' already taken", email);
             throw new BadRequest(String.format("Email %s already taken!", email));
         }
     }
 
-    private void validateCustomerExists(String customerId) {
+    private void checkCustomerExists(String customerId) {
         if (!this.customerRepository.existsById(customerId)) {
             log.warn("Customer with id '{}' does not exist", customerId);
-            throw new BadRequest(String.format("Customer with id %s does not exist", customerId));
+            throw new NotFound(String.format("Customer with id %s does not exist", customerId));
         }
     }
 
@@ -77,5 +82,9 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
             log.warn("Password minimum length ({}) not matched.", MIN_PWD_LENGTH);
             throw new BadRequest(String.format("Password minimum length (%s) not matched", MIN_PWD_LENGTH));
         }
+    }
+
+    private String hashPassword(String password) {
+        return password;
     }
 }
