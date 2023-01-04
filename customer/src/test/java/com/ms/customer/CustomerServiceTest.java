@@ -29,7 +29,6 @@ public class CustomerServiceTest {
     @Before
     @Transactional
     public void setUp() {
-
         createdCustomer = this.customerService.add(CustomerDto.builder()
                 .email("test@mail.com")
                 .password("12345678")
