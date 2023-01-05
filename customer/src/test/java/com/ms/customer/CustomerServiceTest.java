@@ -8,6 +8,7 @@ import com.ms.customer.shared.exceptions.NotFound;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Order;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,12 +38,14 @@ public class CustomerServiceTest {
 
     @Test
     @Transactional
+    @Order(1)
     public void createCustomer() {
         Assert.assertEquals(createdCustomer, customerService.findById(createdCustomer.getId()));
     }
 
     @Test
     @Transactional
+    @Order(2)
     public void createCustomerWithTakenEmail_throwsBadRequest() {
         Assert.assertThrows(BadRequest.class, () -> this.customerService.add(CustomerDto.builder()
                 .email("prueba@mail.com")
@@ -52,6 +55,7 @@ public class CustomerServiceTest {
 
     @Test
     @Transactional
+    @Order(3)
     public void createCustomerWithWeakPassword_throwsBadRequest() {
         Assert.assertThrows(BadRequest.class, () -> this.customerService.add(CustomerDto.builder()
                 .email("new@mail.com")
@@ -97,12 +101,26 @@ public class CustomerServiceTest {
 
     @Test
     @Transactional
+    public void updateCustomerWithWeakPassword_throwsBadRequest() {
+        final String weak_password = "weak";
+        Assert.assertThrows(BadRequest.class, () -> this.customerService.update(this.createdCustomer.getId(),
+                CustomerDto.builder()
+                        .email(createdCustomer.getEmail())
+                        .password(weak_password)
+                        .build()));
+    }
+
+    @Test
+    @Transactional
     public void deleteCustomer() {
         this.customerService.delete(createdCustomer.getId());
         Assert.assertThrows(NotFound.class, () -> this.customerService.findById(createdCustomer.getId()));
     }
 
+
+    @Test
+    @Transactional
     public void deleteNonExistentCustomer_throwsNotFound() {
-        Assert.assertThrows(NotFound.class, () -> this.customerService.findById("non_existent_id"));
+        Assert.assertThrows(NotFound.class, () -> this.customerService.delete("non_existent_id"));
     }
 }
