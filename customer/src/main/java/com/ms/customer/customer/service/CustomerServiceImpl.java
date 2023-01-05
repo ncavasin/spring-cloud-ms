@@ -45,11 +45,11 @@ public record CustomerServiceImpl(CustomerRepository customerRepository, Logger 
         checkCustomerExists(id);
 
         Customer customer = this.findById(id);
-        if (customerDto.email() != null && !customerDto.email().isEmpty() && !customer.getEmail().equals(customerDto.email())) {
+        if (!customer.getEmail().equals(customerDto.email())) {
             checkEmailIsTaken(customerDto.email());
             customer.setEmail(customerDto.email());
         }
-        if (customerDto.password() != null && !customerDto.password().isEmpty() && !customer.getPassword().equals(customerDto.password())) {
+        if (!customer.getPassword().equals(customerDto.password())) {
             checkPasswordLength(customerDto.password());
             customer.setPassword(hashPassword(customerDto.password()));
         }
