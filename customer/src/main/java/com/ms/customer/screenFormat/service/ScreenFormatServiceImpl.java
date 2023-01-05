@@ -3,6 +3,7 @@ package com.ms.customer.screenFormat.service;
 import com.ms.customer.screenFormat.entity.ScreenFormat;
 import com.ms.customer.screenFormat.entity.dto.ScreenFormatDto;
 import com.ms.customer.screenFormat.repository.ScreenFormatRepository;
+import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -28,8 +29,8 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
     }
 
     public ScreenFormat add(ScreenFormatDto screenFormatDto) {
-        logger.info("ScreenFormat with height '{}', width '{}' and room ids '{}' created.",
-                screenFormatDto.screenHeight(), screenFormatDto.screenWidth(), screenFormatDto.roomIds());
+        logger.info("ScreenFormat with name '{}', height '{}' and width '{}' created.",
+                screenFormatDto.name(), screenFormatDto.screenHeight(), screenFormatDto.screenWidth());
         return this.screenFormatRepository.save(ScreenFormat.builder()
                 .name(screenFormatDto.name())
                 .screenHeight(screenFormatDto.screenHeight())
@@ -40,12 +41,21 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
 
     public ScreenFormat update(String id, ScreenFormatDto screenFormatDto) {
         ScreenFormat found = this.findById(id);
+        checkDimensionValue(screenFormatDto.screenHeight());
+        checkDimensionValue(screenFormatDto.screenWidth());
         found.setName(screenFormatDto.name());
         found.setScreenHeight(screenFormatDto.screenHeight());
         found.setScreenWidth(screenFormatDto.screenWidth());
         found.setRooms(new HashSet<>());
         logger.info("ScreenFormat with id '{}' updated.", id);
         return this.screenFormatRepository.save(found);
+    }
+
+    private void checkDimensionValue(Double dimension) {
+        if (dimension <= 0) {
+            log.warn("ScreenFormat dimension must be greater than 0.");
+            throw new BadRequest("ScreenFormat dimension must be greater than 0");
+        }
     }
 
     public void delete(String screenFormatId) {
