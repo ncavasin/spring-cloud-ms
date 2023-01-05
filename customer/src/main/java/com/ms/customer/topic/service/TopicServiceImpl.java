@@ -44,10 +44,10 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
 
     public Topic update(String id, TopicDto topicDto) {
         existsById(id);
-        validateNameIsNotTaken(topicDto.name());
         Topic found = this.findById(id);
+        if (!found.getName().equals(topicDto.name()))
+            validateNameIsNotTaken(topicDto.name());
         found.setName(topicDto.name().toUpperCase());
-        found.setMovies(new HashSet<>());
         logger.info("Topic with id '{}' updated.", topicDto.id());
         return this.topicRepository.save(found);
     }
@@ -68,7 +68,7 @@ public record TopicServiceImpl(TopicRepository topicRepository, Logger logger) i
     private void existsById(String topicId) {
         if (!this.topicRepository.existsById(topicId)) {
             logger.warn("Could not delete Topic with id '{}'. It does not exist.", topicId);
-            throw new BadRequest(String.format("Topic with id %s does not exist.", topicId));
+            throw new NotFound(String.format("Topic with id %s does not exist.", topicId));
         }
     }
 }
