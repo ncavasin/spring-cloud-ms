@@ -3,7 +3,6 @@ package com.ms.customer.screenFormat.service;
 import com.ms.customer.screenFormat.entity.ScreenFormat;
 import com.ms.customer.screenFormat.entity.dto.ScreenFormatDto;
 import com.ms.customer.screenFormat.repository.ScreenFormatRepository;
-import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -52,7 +51,7 @@ public record ScreenFormatServiceImpl(ScreenFormatRepository screenFormatReposit
     public void delete(String screenFormatId) {
         if (!screenFormatRepository.existsById(screenFormatId)) {
             logger.warn("ScreenFormat with id '{}' does not exist.", screenFormatId);
-            throw new BadRequest(String.format("ScreenFormat with id %s does not exist", screenFormatId));
+            throw new NotFound(String.format("ScreenFormat with id %s does not exist", screenFormatId));
         }
         logger.info("ScreenFormat with id '{}' deleted.", screenFormatId);
         this.screenFormatRepository.deleteById(screenFormatId);
