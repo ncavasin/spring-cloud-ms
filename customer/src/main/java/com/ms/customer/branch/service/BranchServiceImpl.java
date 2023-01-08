@@ -35,10 +35,7 @@ public record BranchServiceImpl(BranchRepository branchRepository, Logger logger
     }
 
     public Branch add(BranchDto branchDto) {
-        if (this.branchRepository.existsByName(branchDto.name())) {
-            logger.warn("Could not add Branch with name '{}'. It already exists.", branchDto.name());
-            throw new BadRequest(String.format("Branch with name %s already exists.", branchDto.name()));
-        }
+        checkNameIsUnique(branchDto.name());
         logger.info("Branch with name '{}' created.", branchDto.name());
         return this.branchRepository.save(Branch.builder()
                 .name(branchDto.name())
@@ -48,6 +45,7 @@ public record BranchServiceImpl(BranchRepository branchRepository, Logger logger
 
     public Branch update(String branchId, BranchDto branchDto) {
         Branch found = this.findById(branchId);
+        checkNameIsUnique(branchDto.name());
         found.setName(branchDto.name());
         found.setZipCode(branchDto.zipCode());
         logger.info("Branch with id '{}' updated.", branchId);
@@ -60,5 +58,12 @@ public record BranchServiceImpl(BranchRepository branchRepository, Logger logger
             throw new NotFound(String.format("Branch with id %s does not exist", branchId));
         }
         this.branchRepository.deleteById(branchId);
+    }
+
+    private void checkNameIsUnique(String name) {
+        if (this.branchRepository.existsByName(name)) {
+            logger.warn("Branch name '{}' already exists.", name);
+            throw new BadRequest(String.format("Branch name %s already exists.", name));
+        }
     }
 }
