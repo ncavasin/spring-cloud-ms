@@ -17,6 +17,7 @@ import java.util.Set;
 public class Branch extends TimeTrackable {
     @Column(nullable = false, unique = true)
     protected String name;
+    @Column(nullable = false)
     protected String zipCode;
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
