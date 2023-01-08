@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS branch
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE,
     update_timestamp   TIMESTAMP WITHOUT TIME ZONE,
     name               VARCHAR(255) NOT NULL,
-    zip_code           VARCHAR(255),
+    zip_code           VARCHAR(255) NOT NULL,
     CONSTRAINT pk_branch PRIMARY KEY (id),
     CONSTRAINT unique_branch_name UNIQUE (name)
 );
