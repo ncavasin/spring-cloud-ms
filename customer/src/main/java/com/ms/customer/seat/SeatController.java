@@ -29,8 +29,8 @@ public record SeatController(SeatService seatService) {
     }
 
     @PostMapping("/by-natural-id")
-    public SeatDto findByNaturalId(@Validated @RequestBody SeatNaturalIdDto naturalIdDto) {
-        return SeatConverter.convert(this.seatService.findByNaturalId(naturalIdDto));
+    public SeatDto findByNaturalId(@Validated @RequestBody SeatNaturalIdDto seatNaturalIdDto) {
+        return SeatConverter.convert(this.seatService.findByNaturalId(SeatConverter.convert(seatNaturalIdDto)));
     }
 
     @PostMapping

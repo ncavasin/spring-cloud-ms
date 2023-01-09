@@ -39,15 +39,12 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
     }
 
     @Override
-    public Seat findByNaturalId(SeatNaturalIdDto seatNaturalIdDto) {
-        return this.seatRepository.findBySeatNaturalId(SeatNaturalId.builder()
-                        .seatRow(seatNaturalIdDto.seatRow())
-                        .seatColumn(seatNaturalIdDto.seatColumn())
-                        .build())
+    public Seat findByNaturalId(SeatNaturalId seatNaturalId) {
+        return this.seatRepository.findBySeatNaturalId(seatNaturalId)
                 .orElseThrow(() -> {
-                    logger.warn("Seat {}{} does not exist.", seatNaturalIdDto.seatRow(), seatNaturalIdDto.seatColumn());
+                    logger.warn("Seat {}{} does not exist.", seatNaturalId.getSeatColumn(), seatNaturalId.getSeatColumn());
                     throw new NotFound(String.format("Seat with id %s%d does not exist.",
-                            seatNaturalIdDto.seatRow(), seatNaturalIdDto.seatColumn()));
+                            seatNaturalId.getSeatColumn(), seatNaturalId.getSeatColumn()));
                 });
     }
 
@@ -55,18 +52,17 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
     public List<Seat> findAllByNaturalId(List<SeatNaturalIdDto> seatNaturalIdDtoList) {
         return this.seatRepository.findAllBySeatNaturalId(seatNaturalIdDtoList
                 .stream()
-                .map(s -> SeatNaturalId.builder()
+                .map(s -> com.ms.customer.seat.entity.SeatNaturalId.builder()
                         .seatRow(s.seatRow())
                         .seatColumn(s.seatColumn())
                         .build())
                 .collect(Collectors.toList()));
     }
 
-
     @Override
     public Seat add(SeatDto seatDto) {
         final Room room = this.roomService.findById(seatDto.roomId());
-        checkNaturalIdIsNotTaken(seatDto);
+        checkNaturalIdIsUnique(seatDto);
         log.info("Seat {}{} created.", seatDto.seatNaturalId().getSeatRow(), seatDto.seatNaturalId().getSeatColumn());
         return this.seatRepository.save(Seat.builder()
                 .seatNaturalId(seatDto.seatNaturalId())
@@ -84,10 +80,12 @@ public record SeatServiceImpl(Logger logger, SeatRepository seatRepository,
         logger.info("Seat with id {} deleted.", id);
     }
 
-    private void checkNaturalIdIsNotTaken(SeatDto seatDto) {
+    private void checkNaturalIdIsUnique(SeatDto seatDto) {
         if (this.seatRepository.existsBySeatNaturalId(seatDto.seatNaturalId())) {
-            logger.warn("Could not create Seat {}{}. It already exists.", seatDto.seatNaturalId().getSeatRow(), seatDto.seatNaturalId().getSeatColumn());
-            throw new BadRequest(String.format("Seat %s%s already exists.", seatDto.seatNaturalId().getSeatRow(), seatDto.seatNaturalId().getSeatColumn()));
+            logger.warn("Seat {}{} already exists for room id '{}'.", seatDto.seatNaturalId().getSeatRow(),
+                    seatDto.seatNaturalId().getSeatColumn(), seatDto.roomId());
+            throw new BadRequest(String.format("Seat %s%s already exists for room id '%s'.",
+                    seatDto.seatNaturalId().getSeatRow(), seatDto.seatNaturalId().getSeatColumn(), seatDto.roomId()));
         }
     }
 }

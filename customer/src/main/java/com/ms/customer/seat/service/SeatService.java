@@ -1,6 +1,7 @@
 package com.ms.customer.seat.service;
 
 import com.ms.customer.seat.entity.Seat;
+import com.ms.customer.seat.entity.SeatNaturalId;
 import com.ms.customer.seat.entity.dto.SeatDto;
 import com.ms.customer.seat.entity.dto.SeatNaturalIdDto;
 
@@ -11,7 +12,7 @@ public interface SeatService {
 
     List<Seat> findAllById(List<String> ids);
 
-    Seat findByNaturalId(SeatNaturalIdDto seatNaturalIdDto);
+    Seat findByNaturalId(SeatNaturalId seatNaturalId);
 
     Seat findById(String id);
 

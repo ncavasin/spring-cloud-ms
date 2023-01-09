@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Builder
-public record SeatNaturalIdDto(String id,
-                               @NotEmpty String seatRow,
+public record SeatNaturalIdDto(@NotEmpty String seatRow,
                                @NotNull @Positive(message = "Columns begin at number 1") Integer seatColumn) {
 }

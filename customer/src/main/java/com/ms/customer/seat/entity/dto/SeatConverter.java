@@ -1,6 +1,7 @@
 package com.ms.customer.seat.entity.dto;
 
 import com.ms.customer.seat.entity.Seat;
+import com.ms.customer.seat.entity.SeatNaturalId;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,20 @@ public class SeatConverter {
                 .id(seat.getId())
                 .seatNaturalId(seat.getSeatNaturalId())
                 .roomId(seat.getRoom().getId())
+                .build();
+    }
+
+    public static SeatNaturalIdDto convert(SeatNaturalId seatNaturalId) {
+        return SeatNaturalIdDto.builder()
+                .seatRow(seatNaturalId.getSeatRow())
+                .seatColumn(seatNaturalId.getSeatColumn())
+                .build();
+    }
+
+    public static SeatNaturalId convert(SeatNaturalIdDto seatNaturalIdDto) {
+        return SeatNaturalId.builder()
+                .seatRow(seatNaturalIdDto.seatRow())
+                .seatColumn(seatNaturalIdDto.seatColumn())
                 .build();
     }
 
