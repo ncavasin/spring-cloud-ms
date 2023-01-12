@@ -26,7 +26,7 @@ public record MigrationRunner(Logger logger,
             }
         });
         stopWatch.stop();
-        logger.info("Migration runner finished. Elapsed time is '{}' seconds.", stopWatch.getTotalTimeMillis());
+        logger.info("Migration runner finished. Elapsed time is '{}' milliseconds.", stopWatch.getTotalTimeMillis());
 
     }
 }
