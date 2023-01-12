@@ -2,13 +2,14 @@ package com.ms.customer;
 
 
 import com.ms.customer.room.entity.Room;
+import com.ms.customer.room.entity.dto.RoomDto;
 import com.ms.customer.room.repository.RoomRepository;
 import com.ms.customer.room.service.RoomService;
 import com.ms.customer.seat.entity.Seat;
 import com.ms.customer.seat.entity.SeatNaturalId;
 import com.ms.customer.seat.entity.dto.SeatDto;
-import com.ms.customer.seat.repository.SeatRepository;
 import com.ms.customer.seat.service.SeatService;
+import com.ms.customer.shared.exceptions.BadRequest;
 import com.ms.customer.shared.exceptions.NotFound;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,47 +47,48 @@ public class SeatServiceTest {
     @Mock
     private RoomService roomService;
 
-    @Mock
+    @MockBean
     private RoomRepository roomRepository;
 
-    @Mock
-    private SeatRepository seatRepository;
-
     private Room mockedRoom;
-
+    private Room fakeRoom;
+    private RoomDto mockedDtoRoom;
     private SeatNaturalId createdSeatNaturalId;
     private Seat createdSeat;
 
 
     @Before
+    @Transactional
     public void setUp() {
+        this.createdSeatNaturalId = SeatNaturalId.builder()
+                .seatRow("A")
+                .seatColumn(1)
+                .build();
+        this.mockedDtoRoom = RoomDto.builder()
+                .name("Room #001")
+                .branchId(null)
+                .screenFormatId(null)
+                .build();
         this.mockedRoom = Room.builder()
                 .name("ROOM #001")
                 .screenFormat(null)
                 .seats(null)
                 .branch(null)
                 .build();
-
-        this.createdSeatNaturalId = SeatNaturalId.builder()
-                .seatRow("A")
-                .seatColumn(1)
-                .build();
-
-//        when(roomRepository.save(any(Room.class))).thenReturn(this.mockedRoom);
-        when(roomRepository.findById(any(String.class))).thenReturn(Optional.ofNullable(this.mockedRoom));
-        when(roomService.findById(any(String.class))).thenReturn(this.mockedRoom);
-
-        this.createdSeat = this.seatService.add(SeatDto.builder()
-                .seatNaturalId(createdSeatNaturalId)
-                .roomId(this.mockedRoom.getId())
-                .build());
-
-        when(seatRepository.save(any(Seat.class))).thenReturn(this.createdSeat);
+        mockedRoom.setId("NON_EXISTENT");
+        when(roomService.add(any(RoomDto.class))).thenReturn(mockedRoom);
+        when(roomService.findById(any(String.class))).thenReturn(mockedRoom);
+        this.fakeRoom = this.roomService.add(this.mockedDtoRoom);
+        when(roomRepository.findById(any(String.class))).thenReturn(Optional.of(this.mockedRoom));
     }
 
     @Test
     @Transactional
     public void createSeat() {
+        this.createdSeat = this.seatService.add(SeatDto.builder()
+                .roomId(fakeRoom.getId())
+                .seatNaturalId(this.createdSeatNaturalId)
+                .build());
         Assert.assertEquals(this.createdSeat, this.seatService.findById(this.createdSeat.getId()));
     }
 
@@ -99,7 +102,7 @@ public class SeatServiceTest {
     @Transactional
     public void createSeatWithNonExistentRoom_throwsBadRequest() {
         Assert.assertThrows(NotFound.class, () -> this.createdSeat = this.seatService.add(SeatDto.builder()
-                .seatNaturalId(createdSeatNaturalId)
+                .seatNaturalId(this.createdSeatNaturalId)
                 .roomId("NON_EXISTENT_ROOM")
                 .build()));
     }
