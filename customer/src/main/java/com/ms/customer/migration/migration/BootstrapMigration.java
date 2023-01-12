@@ -23,6 +23,7 @@ import com.ms.customer.topic.service.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.Set;
 
 
+@Profile("!test")
 @Slf4j
 @Component
 public record BootstrapMigration(Logger logger,
