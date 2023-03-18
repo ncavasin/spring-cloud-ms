@@ -1,0 +1,202 @@
+:root {
+    --text-color: #333;
+
+    --button-border-radius: 6px;
+    --button-bkg-color: #007bff;
+    --button-bkg-hover-color: #0062cc;
+
+    --section-border-radius: 6px;
+}
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+header {
+    background-color: #e5e5e5;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav{
+    margin-top: 5px;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.navbut a{
+    color: #333;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.navbut a:hover{
+    background-color: #eee;
+}
+
+.login a.cta {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    padding: 8px 10px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: inline;
+}
+
+.login a.cta:hover {
+    background-color: #0062cc;
+}
+
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero {
+    background-color: #e5e5e5;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: var(--section-border-radius);
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 40px;
+}
+
+.cta {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--button-bkg-color);
+    color: #fff;
+    border-radius: var(--button-border-radius);
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.cta:hover {
+    background-color: var(--button-bkg-hover-color);
+}
+
+
+.features {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.features ul {
+    list-style: none;
+}
+
+.features li {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.features li i {
+    font-size: 24px;
+    color: #333;
+    margin-right: 10px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Sign-up form */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#email, #password {
+    width: 45%;
+}
+
+label[for="email"], label[for="password"] {
+    width: 45%;
+    display: inline-block;
+    text-align: left;
+}
+
+input[type="email"], input[type="password"] {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    width: 55%;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+button[type="submit"] {
+    color: #FFF;
+    font-size: 18px;
+    padding: 16px 30px;
+    border: none;
+    border-radius: var(--button-border-radius);
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--button-bkg-hover-color);
+}
